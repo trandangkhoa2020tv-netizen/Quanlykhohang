@@ -1,623 +1,148 @@
 # Quan Ly Kho Hang
 
-He thong quan ly kho hang gom 4 project chinh:
+He thong quan ly kho hang cho desktop Windows, gom ung dung WinForms, ASP.NET Core Minimal API va PostgreSQL.
 
-- `QuanLyKhoHang.WinForms`: ung dung desktop WinForms.
-- `QuanLyKhoHang.Api`: backend ASP.NET Core Minimal API.
-- `QuanLyKhoHang.Shared`: class library chua model dung chung.
-- `QuanLyKhoHang.Tests`: test tu dong cho service, validation va JWT.
+## Thanh phan
 
-WinForms chi phu trach giao dien va goi API. API phu trach xac thuc, phan quyen, validate, xu ly nghiep vu, ghi audit log, thao tac PostgreSQL va tra JSON ve cho WinForms.
+| Project | Muc dich |
+| --- | --- |
+| `QuanLyKhoHang.WinForms` | Ung dung desktop: dang nhap, quan ly danh muc, lap phieu nhap/xuat, dashboard va xuat Excel/PDF. |
+| `QuanLyKhoHang.Api` | Backend HTTP: xac thuc JWT, phan quyen, validate, xu ly nghiep vu, audit log va PostgreSQL. |
+| `QuanLyKhoHang.Shared` | Model va DTO dung chung giua desktop va API. |
+| `QuanLyKhoHang.Tests` | xUnit test cho validation, JWT va cac middleware bao mat. |
 
-## Luong Moi Cua He Thong
+Tat ca project dang target `.NET 9`; WinForms target `net9.0-windows`.
 
-Luong tong quat:
+## Kien truc
 
-```txt
+```text
 WinForms
-->
-ApiClients
-->
-ApiHttpClient
-  - X-API-Key neu API bat RequireApiKey
-  - Authorization: Bearer <jwt> sau khi dang nhap
-->
-Minimal API Endpoints
-->
-JWT middleware + role authorization
-->
-Services
-->
-Repositories
-->
-PostgreSQL
-->
-AuditLog cho thao tac thay doi du lieu
+  -> ApiClients
+  -> HTTP JSON (X-API-Key neu bat, Bearer JWT sau dang nhap)
+  -> QuanLyKhoHang.Api
+  -> Services / Repositories
+  -> PostgreSQL
 ```
 
-Luong khoi dong desktop:
+WinForms khong ket noi truc tiep den PostgreSQL. Mọi kiem tra quyen va nghiep vu quan trong deu nam o API.
 
-```txt
-Program.cs (WinForms)
-->
-ApplicationConfiguration.Initialize()
-->
-ApiServerLauncher.EnsureStarted()
-->
-GET /api/health
-->
-Neu API chua chay thi khoi dong QuanLyKhoHang.Api
-  - chi ap dung local dev voi ApiBaseUrl localhost:8088 va AutoStartLocalApi = true
-->
-FrmDangNhap
-```
+## Yeu cau
 
-Luong dang nhap:
+- .NET SDK 9.0
+- PostgreSQL 17 hoac tuong thich
+- Visual Studio 2022 co workload **Desktop development with .NET** (neu dung IDE)
+- Docker Desktop (tuy chon, cho API va PostgreSQL container)
 
-```txt
-FrmDangNhap
-->
-AuthApiClient.CheckLogin(username, password)
-->
-POST /api/auth/login
-->
-AuthService + TaiKhoanRepository
-->
-API tra ve vaiTro, token, expiresAt
-->
-ApiHttpClient.SetBearerToken(token)
-->
-UserSession luu ten tai khoan va vai tro
-->
-FrmMain phan quyen menu
-```
+## Khoi dong local
 
-Luong nghiep vu sau khi dang nhap:
+1. Tao database PostgreSQL `quanlyhanghoa` va chay schema:
 
-```txt
-Form nghiep vu
-->
-*ApiClient
-->
-ApiHttpClient gui Bearer token
-->
-Endpoint
-->
-Service validate va xu ly rule
-->
-Repository chay SQL/transaction
-->
-AuditLogService ghi lich su voi user/role/ip
-->
-Form load lai du lieu
-```
+   ```powershell
+   psql -U postgres -d quanlyhanghoa -f QuanLyKhoHang.WinForms/sql/create_tables.sql
+   ```
 
-## Cau Truc Thu Muc Tong Quan
+2. Dat bien moi truong cho phien PowerShell chay API:
 
-```txt
-QuanLyKhoHang/
-|   .gitignore
-|   .dockerignore
-|   .env.example
-|   docker-compose.yml
-|   QuanLyKhoHang.sln
-|   QuanLyKhoHang.slnLaunch
-|   README.md
-|
-+---.github/
-|   |   copilot-instructions.md
-|   |
-|   \---workflows/
-|           build.yml
-|
-+---QuanLyKhoHang.WinForms/
-|   |   .gitignore
-|   |   Program.cs
-|   |   QuanLyKhoHang.WinForms.csproj
-|   |   README.md
-|   |
-|   +---ApiClients/
-|   |       ApiClientSettings.cs
-|   |       ApiHttpClient.cs
-|   |       ApiServerLauncher.cs
-|   |       DanhMucApiClients.cs
-|   |       KhoApiClients.cs
-|   |
-|   +---Config/
-|   |       appsettings.example.json
-|   |       appsettings.json
-|   |
-|   +---Forms/
-|   |       FrmDangNhap.cs
-|   |       FrmHangHoa.cs
-|   |       FrmKhachHang.cs
-|   |       FrmMain.cs
-|   |       FrmNhanVien.cs
-|   |       FrmNhapKho.cs
-|   |       FrmXuatKho.cs
-|   |       UiTheme.cs
-|   |
-|   +---Reports/
-|   |       ExportExcel.cs
-|   |       ExportPdf.cs
-|   |
-|   \---sql/
-|           backup_database.ps1
-|           create_tables.sql
-|           migrate_add_trang_thai.sql
-|           migrate_hash_sample_passwords.sql
-|           sample_data.sql
-|           sync_existing_database.sql
-|
-+---QuanLyKhoHang.Api/
-|   |   .gitignore
-|   |   appsettings.json
-|   |   appsettings.Production.json
-|   |   DataTableJson.cs
-|   |   Dockerfile
-|   |   InventoryApiQueries.cs
-|   |   Program.cs
-|   |   QuanLyKhoHang.Api.csproj
-|   |   README.md
-|   |
-|   +---Config/
-|   |       ApiSettings.cs
-|   |       JwtSettings.cs
-|   |
-|   +---Data/
-|   |       DatabaseHelper.cs
-|   |       DatabaseMaintenance.cs
-|   |       DbConnection.cs
-|   |
-|   +---DTOs/
-|   |       AuthDtos.cs
-|   |       DataTableDtoMapper.cs
-|   |       PhieuKhoDtos.cs
-|   |       ResponseDtos.cs
-|   |
-|   +---Endpoints/
-|   |       AuthEndpoints.cs
-|   |       HangHoaEndpoints.cs
-|   |       KhachHangEndpoints.cs
-|   |       KhoEndpoints.cs
-|   |       LoaiHangEndpoints.cs
-|   |       NhaCungCapEndpoints.cs
-|   |       NhanVienEndpoints.cs
-|   |       PhieuNhapEndpoints.cs
-|   |       PhieuXuatEndpoints.cs
-|   |       SystemEndpoints.cs
-|   |
-|   +---Repositories/
-|   |       HangHoaRepository.cs
-|   |       KhachHangRepository.cs
-|   |       LoaiHangRepository.cs
-|   |       NhaCungCapRepository.cs
-|   |       NhanVienRepository.cs
-|   |       PhieuNhapRepository.cs
-|   |       PhieuXuatRepository.cs
-|   |       TaiKhoanRepository.cs
-|   |
-|   \---Services/
-|           ApiAuthorization.cs
-|           ApiKeyValidator.cs
-|           ApiResults.cs
-|           ApiValidationException.cs
-|           AuditLogService.cs
-|           AuthService.cs
-|           DesktopClientLauncher.cs
-|           HangHoaService.cs
-|           JwtTokenService.cs
-|           KhachHangService.cs
-|           KhoService.cs
-|           LoaiHangService.cs
-|           NhaCungCapService.cs
-|           NhanVienService.cs
-|           PhieuNhapService.cs
-|           PhieuXuatService.cs
-|           ValidationHelper.cs
-|
-+---QuanLyKhoHang.Shared/
-|   |   .gitignore
-|   |   QuanLyKhoHang.Shared.csproj
-|   |   README.md
-|   |
-|   \---Models/
-|           ChiTietPhieuNhap.cs
-|           ChiTietPhieuXuat.cs
-|           HangHoa.cs
-|           KhachHang.cs
-|           LoaiHang.cs
-|           NhaCungCap.cs
-|           NhanVien.cs
-|           PhieuNhap.cs
-|           PhieuXuat.cs
-|           TaiKhoan.cs
-|           UserSession.cs
-|
-\---QuanLyKhoHang.Tests/
-        .gitignore
-        JwtTokenServiceTests.cs
-        ServiceValidationTests.cs
-        QuanLyKhoHang.Tests.csproj
-        README.md
-```
+   ```powershell
+   $env:QLKH_DB_PASSWORD = "<database-password>"
+   $env:QLKH_JWT_SECRET = "<secret-at-least-32-characters>"
+   ```
 
-Thu muc build nhu `bin/`, `obj/`, `.vs/` la file sinh ra khi build va khong dua vao cay tren.
+   `QLKH_JWT_SECRET` can dai it nhat 32 ky tu. File `.env` duoc Docker Compose va script backup su dung, nhung `dotnet run` khong tu dong nap file nay.
 
-## Vai Tro Tung Project
+3. Khoi phuc package va build:
 
-| Project | Vai tro |
-| --- | --- |
-| `QuanLyKhoHang.WinForms` | Giao dien desktop, dieu huong, form nghiep vu, goi API, xuat Excel/PDF. |
-| `QuanLyKhoHang.Api` | Backend Minimal API, xac thuc JWT, API key, phan quyen, rate limit, validate, transaction, audit log. |
-| `QuanLyKhoHang.Shared` | Model dung chung cho WinForms va API. |
-| `QuanLyKhoHang.Tests` | Unit test cho validation service va JWT. |
+   ```powershell
+   dotnet restore QuanLyKhoHang.sln
+   dotnet build QuanLyKhoHang.sln
+   ```
 
-## Mo Hinh Docker
+4. Chay API:
 
-Docker chi chay backend va database:
+   ```powershell
+   dotnet run --project QuanLyKhoHang.Api/QuanLyKhoHang.Api.csproj
+   ```
 
-```txt
-May Windows nguoi dung
-QuanLyKhoHang.WinForms.exe
-  -> HTTP/JSON
-Docker server
-  -> QuanLyKhoHang.Api container
-  -> PostgreSQL container
-```
+5. Chay desktop o terminal khac:
 
-WinForms la ung dung desktop Windows nen khong dua vao Docker. Khi dung API Docker local, cau hinh client:
+   ```powershell
+   dotnet run --project QuanLyKhoHang.WinForms/QuanLyKhoHang.WinForms.csproj
+   ```
 
-```json
-{
-  "ApiBaseUrl": "http://localhost:8088",
-  "ApiKey": "",
-  "AutoStartLocalApi": false
-}
-```
+API mac dinh nghe tai `http://localhost:8088`. Swagger chi co trong Development tai `http://localhost:8088/swagger`.
 
-`QuanLyKhoHang.Shared` duoc build kem theo project nao reference no. `QuanLyKhoHang.Tests` chi dung de kiem thu.
+Schema va `sample_data.sql` khong tao tai khoan dang nhap mac dinh. Hay tao tai khoan dau tien bang quy trinh quan tri database cua don vi, voi mat khau PBKDF2 hop le; khong them mat khau plain text vao script hay tai lieu.
 
-Port khi chay Docker local:
+Chi voi local development, WinForms co the tu khoi dong API khi `Config/appsettings.json` dat `AutoStartLocalApi` la `true` va `ApiBaseUrl` la `http://localhost:8088`.
 
-```txt
-WinForms -> http://localhost:8088 -> API Docker
-API Docker -> postgres:5432 -> PostgreSQL container
-DBeaver/Windows -> localhost:5432 -> PostgreSQL container
-PostgreSQL local tren Windows cung dung localhost:5432 nen can dung 1 nguon database tai mot thoi diem hoac doi port publish trong docker-compose.yml
-```
+## Docker
 
-PostgreSQL Docker dung image `postgres:17`. Trong `docker-compose.yml`, giu `QLKH_DB_HOST=postgres` va `QLKH_DB_PORT=5432` cho API Docker. PostgreSQL container hien publish ra Windows tai `localhost:5432`; neu may dang chay PostgreSQL local tren port nay thi dung PostgreSQL local hoac doi port publish truoc khi `docker compose up`.
-
-Bang cong chuan:
-
-| Thanh phan | Dia chi |
-| --- | --- |
-| WinForms goi API | `http://localhost:8088` |
-| API Visual Studio/local | `http://localhost:8088` |
-| API Docker publish ra Windows | `localhost:8088` -> container `8080` |
-| PostgreSQL local Windows | `localhost:5432` |
-| PostgreSQL Docker cho DBeaver/Windows | `localhost:5432` -> container `5432` |
-| API Docker goi PostgreSQL Docker | `postgres:5432` |
-
-## Cau Hinh Database
-
-File cau hinh database cua API:
-
-```txt
-QuanLyKhoHang.Api/appsettings.json
-```
-
-Vi du cau hinh. Mat khau database trong README luon de trong de khong lo thong tin nhay cam:
-
-```json
-{
-  "DatabaseSettings": {
-    "Host": "localhost",
-    "Port": 5432,
-    "Database": "quanlyhanghoa",
-    "Username": "postgres",
-    "Password": ""
-  },
-  "ApiSettings": {
-    "Url": "http://localhost:8088",
-    "RequireApiKey": false,
-    "ApiKey": "",
-    "AllowedOrigins": []
-  },
-  "JwtSettings": {
-    "RequireJwt": true,
-    "Issuer": "QuanLyKhoHang.Api",
-    "Audience": "QuanLyKhoHang.WinForms",
-    "SecretKey": "",
-    "ExpirationMinutes": 480
-  }
-}
-```
-
-`DatabaseSettings` tren la cau hinh khi chay API local/Visual Studio voi PostgreSQL local `localhost:5432`. Khi chay Docker, cac bien moi truong trong `docker-compose.yml` se ghi de thanh `QLKH_DB_HOST=postgres` va `QLKH_DB_PORT=5432`.
-
-Dat mat khau database bang file local hoac bien moi truong tren may chay that. Khong ghi mat khau database vao README, issue, commit message hoac tai lieu chia se.
-
-Bien moi truong co the ghi de cau hinh database:
-
-```txt
-QLKH_DB_HOST
-QLKH_DB_PORT
-QLKH_DB_NAME
-QLKH_DB_USER
-QLKH_DB_PASSWORD
-```
-
-Bien moi truong ASP.NET Core co the ghi de API/JWT:
-
-```txt
-ApiSettings__ApiKey
-ApiSettings__RequireApiKey
-ApiSettings__AllowedOrigins__0
-JwtSettings__RequireJwt
-JwtSettings__SecretKey
-JwtSettings__ExpirationMinutes
-```
-
-## Cai Dat Database
-
-Database mac dinh:
-
-```txt
-Database: quanlyhanghoa
-Username: postgres
-Password:
-Port local Windows: 5432
-Port Docker tren Windows: 5432
-Port noi bo Docker: 5432
-```
-
-Script SQL nam trong:
-
-```txt
-QuanLyKhoHang.WinForms/sql/
-```
-
-Thu tu chay voi database moi:
-
-```txt
-1. create_tables.sql
-2. sample_data.sql
-```
-
-Voi database cu, chay script dong bo schema:
-
-```txt
-sync_existing_database.sql
-```
-
-Neu chi can migrate rieng:
-
-```txt
-migrate_add_trang_thai.sql
-migrate_hash_sample_passwords.sql
-```
-
-Sao luu database:
-
-```powershell
-.\QuanLyKhoHang.WinForms\sql\backup_database.ps1
-```
-
-Script backup doc `QLKH_DB_PASSWORD` tu bien moi truong; khong can ghi mat khau vao README.
-
-## Restore Database That Vao Docker
-
-Docker compose khong tu nap `create_tables.sql` va `sample_data.sql` vao PostgreSQL container. Khi can dung database that, backup database local `quanlyhanghoa` tu DBeaver thanh:
-
-```txt
-D:\QuanLyKhoHang\quanlyhanghoa.backup
-```
-
-Docker compose can bien `QLKH_DB_PASSWORD`. Tao file `.env` tu `.env.example` va dien mat khau truoc khi khoi dong:
+Docker chay API va PostgreSQL; WinForms van chay tren Windows host.
 
 ```powershell
 Copy-Item .env.example .env
-notepad .env
-```
-
-Sau khi da co backup, tao lai PostgreSQL Docker trong bang:
-
-```powershell
-docker compose down -v
-docker compose up -d
-```
-
-Lenh `down -v` se xoa volume PostgreSQL Docker hien tai. Chi chay sau khi da co backup database that.
-
-Them connection DBeaver moi cho Docker:
-
-```txt
-Host: localhost
-Port: 5432
-Database: quanlyhanghoa
-Username: postgres
-Password: <gia-tri-QLKH_DB_PASSWORD-trong-.env>
-```
-
-Restore file `D:\QuanLyKhoHang\quanlyhanghoa.backup` vao database Docker, roi kiem tra:
-
-```sql
-SELECT * FROM chitietphieunhap;
-```
-
-## Bao Mat Va Phan Quyen
-
-- `/api/auth/login` tra ve `token` va `expiresAt`.
-- WinForms luu token vao `ApiHttpClient` va gui `Authorization: Bearer <jwt>` cho cac request tiep theo.
-- Khi `JwtSettings.RequireJwt = true`, cac endpoint nghiep vu yeu cau JWT hop le.
-- Cac route public: `/`, `/api/health`, `/api/chuc-nang`, `/api/docs`, `/api/auth/login`, `/swagger`.
-- Mot so thao tac nhay cam yeu cau role `Admin`, vi du xoa hang hoa, xoa khach hang, them/sua/xoa nhan vien.
-- API co the bat them `ApiSettings.RequireApiKey`; client gui `X-API-Key`.
-- API ghi audit log cho thao tac them, sua, xoa va lap phieu.
-- API co rate limit cho login va mot so endpoint hang hoa.
-- Moi truong production bat kiem tra cau hinh: phai bat JWT, dung HTTPS, gioi han CORS, khong dung secret/mac dinh yeu.
-
-## Chuc Nang Chinh
-
-- Dang nhap, JWT va phan quyen theo vai tro.
-- Quan ly hang hoa, loai hang, nha cung cap, khach hang, nhan vien.
-- Lap phieu nhap kho, cong ton kho bang transaction.
-- Lap phieu xuat kho, kiem tra ton kho va tru ton bang transaction.
-- Chan xuat am bang transaction va rang buoc database.
-- Xem hang ton kho thap.
-- Xem lich su va chi tiet phieu nhap/phieu xuat.
-- Xuat Excel/PDF.
-- Ghi audit log cac thao tac thay doi du lieu.
-
-## Build Va Chay
-
-Tai root repository:
-
-```powershell
-dotnet restore QuanLyKhoHang.sln
-dotnet build QuanLyKhoHang.sln
-```
-
-Chay WinForms:
-
-```powershell
-dotnet run --project QuanLyKhoHang.WinForms/QuanLyKhoHang.WinForms.csproj
-```
-
-Chay API rieng:
-
-```powershell
-dotnet run --project QuanLyKhoHang.Api/QuanLyKhoHang.Api.csproj
-```
-
-Chay API va PostgreSQL bang Docker:
-
-```powershell
-Copy-Item .env.example .env
-# Sua QLKH_DB_PASSWORD trong .env truoc khi chay lenh duoi
+# Dat QLKH_DB_PASSWORD va QLKH_JWT_SECRET trong .env
 docker compose up -d --build
 ```
 
-Khi chay Docker, API lang nghe tai:
+| Dich vu | Dia chi tren may host |
+| --- | --- |
+| API | `http://localhost:8088` |
+| PostgreSQL | `localhost:5432` |
 
-```txt
-http://localhost:8088
+Trong Docker, API ket noi PostgreSQL qua `postgres:5432`. Neu PostgreSQL local dang dung cong `5432`, hay doi port publish trong `docker-compose.yml`.
+
+## Cau hinh va bao mat
+
+File [`.env.example`](.env.example) liet ke cac bien mo rong:
+
+```text
+QLKH_DB_HOST, QLKH_DB_PORT, QLKH_DB_NAME, QLKH_DB_USER, QLKH_DB_PASSWORD
+QLKH_JWT_SECRET
+QLKH_API_KEY
+QLKH_AUTO_MIGRATE
+QLKH_SEED_DEMO_DATA
 ```
 
-PostgreSQL Docker dung cho DBeaver tren Windows:
+- `QLKH_JWT_SECRET`: bat buoc trong production, toi thieu 32 ky tu. Development khong dat bien nay se tao secret tam thoi cho phien chay.
+- `QLKH_API_KEY`: bat buoc khi `ApiSettings.RequireApiKey=true`; desktop gui key qua `X-API-Key`.
+- `QLKH_AUTO_MIGRATE=1`: chi cho Development, cho phep migration runtime.
+- `QLKH_SEED_DEMO_DATA=1`: chi co tac dung khi da bat auto migrate; khong dung cho production.
 
-```txt
-localhost:5432
-```
+API gioi han request body 256 KB, yeu cau JSON cho POST/PUT/PATCH API, rate-limit login 5 lan/15 phut va co global rate limit 120 request/phut theo user/IP. Endpoint nghiep vu dung JWT; cac thao tac nhay cam con kiem tra role `Admin`.
 
-PostgreSQL Docker trong container va tren Windows deu dang dung cong `5432` theo `docker-compose.yml`. Neu trung voi PostgreSQL local, doi port publish hoac dung mot database tai mot thoi diem.
+## Database
 
-Mac dinh API lang nghe tai:
+SQL nam tai `QuanLyKhoHang.WinForms/sql/`:
 
-```txt
-http://localhost:8088
-```
+| File | Muc dich |
+| --- | --- |
+| `create_tables.sql` | Tao schema, rang buoc, index va audit log cho database moi. |
+| `sample_data.sql` | Du lieu nghiep vu mau; khong chua tai khoan/mat khau mau. |
+| `sync_existing_database.sql` | Dong bo schema database cu. |
+| `migrate_add_trang_thai.sql` | Migration trang thai tai khoan cho database cu. |
+| `backup_database.ps1` | Backup bang `pg_dump`, doc thong tin tu bien moi truong. |
 
-Kiem tra API:
+Database production phai duoc backup truoc khi chay migration. API khong tu dong migrate hoac seed tru khi bat ro rang cac bien Development o tren.
 
-```http
-GET http://localhost:8088/api/health
-```
-
-Swagger chi bat trong moi truong development:
-
-```txt
-http://localhost:8088/swagger
-```
-
-Chay test:
+## Test
 
 ```powershell
 dotnet test QuanLyKhoHang.sln
 ```
 
-Luong CI trong `.github/workflows/build.yml`:
+Test hien tai khong can PostgreSQL that. Xem [README cua project test](QuanLyKhoHang.Tests/README.md) de biet pham vi va cach chay chi tiet.
 
-```txt
-push/pull_request
-->
-windows-latest
-->
-setup-dotnet 10.0.x
-->
-dotnet restore
-->
-dotnet build --configuration Release --no-restore
-->
-dotnet test --configuration Release --no-build
+## Cau truc nhanh
+
+```text
+QuanLyKhoHang.sln
+QuanLyKhoHang.Api/        Backend Minimal API
+QuanLyKhoHang.WinForms/   Desktop WinForms
+QuanLyKhoHang.Shared/     Model dung chung
+QuanLyKhoHang.Tests/      xUnit tests
+docker-compose.yml        API + PostgreSQL cho local Docker
+.env.example              Mau bien moi truong, khong chua secret
 ```
 
-Publish WinForms thanh file `.exe` cho Windows:
-
-```powershell
-dotnet publish QuanLyKhoHang.WinForms/QuanLyKhoHang.WinForms.csproj `
-  -c Release `
-  -r win-x64 `
-  --self-contained true
-```
-
-## API Chinh
-
-```http
-GET  /
-GET  /api/health
-GET  /api/chuc-nang
-GET  /api/docs
-POST /api/auth/login
-
-GET  /api/v2/hang-hoa
-GET  /api/v2/loai-hang
-GET  /api/v2/nha-cung-cap
-GET  /api/v2/khach-hang
-GET  /api/v2/nhan-vien
-GET  /api/v2/phieu-nhap
-GET  /api/v2/phieu-nhap/{id}/chi-tiet
-GET  /api/v2/phieu-xuat
-GET  /api/v2/phieu-xuat/{id}/chi-tiet
-GET  /api/v2/phieu-xuat/{id}/thong-tin
-
-GET,POST   /api/hang-hoa
-PUT,DELETE /api/hang-hoa/{id}
-
-GET,POST   /api/loai-hang
-PUT,DELETE /api/loai-hang/{id}
-
-GET,POST   /api/nha-cung-cap
-PUT,DELETE /api/nha-cung-cap/{id}
-
-GET,POST   /api/khach-hang
-PUT,DELETE /api/khach-hang/{id}
-
-GET,POST   /api/nhan-vien
-PUT,DELETE /api/nhan-vien/{id}
-
-GET  /api/ton-kho/thap?soLuongToiDa=10
-
-GET  /api/phieu-nhap
-POST /api/phieu-nhap
-GET  /api/phieu-nhap/{id}/chi-tiet
-
-GET  /api/phieu-xuat
-POST /api/phieu-xuat
-GET  /api/phieu-xuat/{id}/chi-tiet
-GET  /api/phieu-xuat/{id}/thong-tin
-```
-
-Route `/api/...` tra JSON tu DataTable de WinForms hien tai tuong thich. Route `/api/v2/...` tra DTO typed object, phu hop cho client moi, Swagger va test.
-
-## Ghi Chu Phat Trien
-
-- Khong commit `bin/`, `obj/`, `.vs/`.
-- Khong dua SQL truc tiep vao Form.
-- Khong de WinForms truy cap PostgreSQL truc tiep.
-- Khi doi route API, cap nhat file trong `QuanLyKhoHang.WinForms/ApiClients/`.
-- Khi doi alias cot SQL tra ve, kiem tra DataGridView va ComboBox trong cac Form.
-- Nghiep vu nhap/xuat kho phai giu transaction de tranh lech ton kho.
-- Khong ghi mat khau database vao README; cac vi du cau hinh luon de `Password` rong.
+Tai lieu chi tiet nam o README cua tung project.
