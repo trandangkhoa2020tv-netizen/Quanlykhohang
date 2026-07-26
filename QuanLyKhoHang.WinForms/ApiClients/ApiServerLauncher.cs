@@ -94,8 +94,8 @@ namespace QuanLyKhoHang.ApiClients
         private static ProcessStartInfo CreateStartInfo()
         {
             string apiDirectory = FindApiDirectory();
-            string debugDll = Path.Combine(apiDirectory, "bin", "Debug", "net10.0", "QuanLyKhoHang.Api.dll");
-            string releaseDll = Path.Combine(apiDirectory, "bin", "Release", "net10.0", "QuanLyKhoHang.Api.dll");
+            string debugDll = Path.Combine(apiDirectory, "bin", "Debug", "net9.0", "QuanLyKhoHang.Api.dll");
+            string releaseDll = Path.Combine(apiDirectory, "bin", "Release", "net9.0", "QuanLyKhoHang.Api.dll");
             string projectFile = Path.Combine(apiDirectory, "QuanLyKhoHang.Api.csproj");
 
             if (File.Exists(debugDll))

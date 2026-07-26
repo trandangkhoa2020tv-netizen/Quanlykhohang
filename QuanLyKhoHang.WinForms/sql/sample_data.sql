@@ -56,18 +56,6 @@ INSERT INTO hanghoa (ma_hanghoa, ten_hanghoa, ma_loaihang, ma_nhacungcap, gia_nh
 SELECT 3, 'Mi goi', 3, 1, 3000, 5000, 200, 'Goi', 'Thuc pham nhanh'
 WHERE NOT EXISTS (SELECT 1 FROM hanghoa WHERE ma_hanghoa = 3);
 
-INSERT INTO taikhoan (ma_taikhoan, ma_nhanvien, ten_taikhoan, mat_khau, vai_tro, trang_thai)
-SELECT 1, 1, 'admin', 'pbkdf2$100000$cWxraC1hZG1pbi0xMjM0NTYtc2FsdC12MQ==$D42Ak1eqSBNJflAoIDRvaAMOsz7NF5X7UQjvDwGr0xk=', 'Admin', true
-WHERE NOT EXISTS (SELECT 1 FROM taikhoan WHERE ma_taikhoan = 1);
-
-INSERT INTO taikhoan (ma_taikhoan, ma_nhanvien, ten_taikhoan, mat_khau, vai_tro, trang_thai)
-SELECT 2, 2, 'nhanvienkho', 'pbkdf2$100000$cWxraC1zdGFmZi1zYWx0LXYx$dS8VgTfJ0gRv1mu5WUKd36fm95MT4+wSG9lI5rlplZk=', 'NhanVien', true
-WHERE NOT EXISTS (SELECT 1 FROM taikhoan WHERE ma_taikhoan = 2);
-
-INSERT INTO taikhoan (ma_taikhoan, ma_nhanvien, ten_taikhoan, mat_khau, vai_tro, trang_thai)
-SELECT 3, 3, 'nhanvienbanhang', 'pbkdf2$100000$cWxraC1zdGFmZi1zYWx0LXYx$dS8VgTfJ0gRv1mu5WUKd36fm95MT4+wSG9lI5rlplZk=', 'NhanVien', true
-WHERE NOT EXISTS (SELECT 1 FROM taikhoan WHERE ma_taikhoan = 3);
-
 -- Dong bo lai sequence sau khi chen ma co dinh.
 SELECT setval(pg_get_serial_sequence('loaihang', 'ma_loaihang'), COALESCE((SELECT MAX(ma_loaihang) FROM loaihang), 1), true);
 SELECT setval(pg_get_serial_sequence('nhacungcap', 'ma_nhacungcap'), COALESCE((SELECT MAX(ma_nhacungcap) FROM nhacungcap), 1), true);

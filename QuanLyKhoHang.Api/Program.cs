@@ -10,13 +10,21 @@ using QuanLyKhoHang.Data;
 using QuanLyKhoHang.Repositories;
 using System.Threading.RateLimiting;
 
-    WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+const long MaxApiRequestBodySize = 256 * 1024;
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Đọc cấu hình API từ appsettings.json và đặt URL backend sẽ lắng nghe.
 ApiSettings apiSettings = builder.Configuration.GetSection("ApiSettings").Get<ApiSettings>() ?? new ApiSettings();
 JwtSettings jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>() ?? new JwtSettings();
-ValidateProductionConfiguration(apiSettings, jwtSettings, builder.Configuration, builder.Environment);
+ApplySecurityEnvironmentOverrides(apiSettings, jwtSettings, builder.Environment);
+ValidateSecurityConfiguration(apiSettings, jwtSettings, builder.Configuration, builder.Environment);
 builder.WebHost.UseUrls(apiSettings.Url);
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = MaxApiRequestBodySize;
+    options.Limits.MaxRequestLineSize = 8 * 1024;
+});
 
     // Cho phép JSON request không phân biệt chữ hoa/thường ở tên property.
     builder.Services.Configure<JsonOptions>(options =>
@@ -35,6 +43,16 @@ builder.Services.AddRateLimiter(options =>
             new { message = "Qua nhieu request. Vui long thu lai sau." },
             cancellationToken);
     };
+
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            "global:" + GetRateLimitPartitionKey(context),
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 120,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            }));
 
     options.AddPolicy("HangHoaRead", context =>
         RateLimitPartition.GetFixedWindowLimiter(
@@ -82,7 +100,7 @@ builder.Services.AddRateLimiter(options =>
             _ => new FixedWindowRateLimiterOptions
             {
                 PermitLimit = 5,
-                Window = TimeSpan.FromMinutes(5),
+                Window = TimeSpan.FromMinutes(15),
                 QueueLimit = 0
             }));
 });
@@ -139,16 +157,23 @@ builder.Services.AddRateLimiter(options =>
     WebApplication app = builder.Build();
 
     // Đồng bộ sequence tự tăng để dữ liệu import sẵn không làm trùng khóa chính.
-    try
-    {
-        DatabaseMaintenance.EnsureRuntimeSchema();
-        DatabaseMaintenance.EnsureSampleAccountPasswords();
-        DatabaseMaintenance.EnsureSerialSequences();
+try
+{
+        bool runMigrations = builder.Environment.IsDevelopment()
+            && string.Equals(Environment.GetEnvironmentVariable("QLKH_AUTO_MIGRATE"), "1", StringComparison.Ordinal);
+        bool seedDemoData = runMigrations
+            && string.Equals(Environment.GetEnvironmentVariable("QLKH_SEED_DEMO_DATA"), "1", StringComparison.Ordinal);
+
+        if (runMigrations)
+        {
+            DatabaseMaintenance.EnsureRuntimeSchema(seedDemoData);
+            DatabaseMaintenance.EnsureSerialSequences();
+        }
     }
-    catch (Exception ex)
-    {
-        Console.Error.WriteLine("Khong the dong bo sequence database khi khoi dong API: " + ex.Message);
-    }
+catch (Exception ex)
+{
+        throw new InvalidOperationException("Khong the chay migration database: " + ex.Message, ex);
+}
 
 if (!app.Environment.IsDevelopment())
 {
@@ -157,6 +182,30 @@ if (!app.Environment.IsDevelopment())
 }
 
     app.UseCors("ApiCors");
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/api") &&
+        (HttpMethods.IsPost(context.Request.Method) ||
+         HttpMethods.IsPut(context.Request.Method) ||
+         HttpMethods.IsPatch(context.Request.Method)))
+    {
+        if (context.Request.ContentLength > MaxApiRequestBodySize)
+        {
+            context.Response.StatusCode = StatusCodes.Status413PayloadTooLarge;
+            await context.Response.WriteAsJsonAsync(new { message = "Payload vuot qua kich thuoc toi da 256 KB." });
+            return;
+        }
+
+        if (context.Request.ContentLength > 0 && !context.Request.HasJsonContentType())
+        {
+            context.Response.StatusCode = StatusCodes.Status415UnsupportedMediaType;
+            await context.Response.WriteAsJsonAsync(new { message = "API chi nhan request JSON." });
+            return;
+        }
+    }
+
+    await next();
+});
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -234,18 +283,48 @@ app.UseRateLimiter();
 
     app.Run();
 
-static void ValidateProductionConfiguration(
+static void ApplySecurityEnvironmentOverrides(
+    ApiSettings apiSettings,
+    JwtSettings jwtSettings,
+    IWebHostEnvironment environment)
+{
+    jwtSettings.SecretKey = Environment.GetEnvironmentVariable("QLKH_JWT_SECRET") ?? string.Empty;
+    apiSettings.ApiKey = Environment.GetEnvironmentVariable("QLKH_API_KEY") ?? string.Empty;
+
+    if (string.IsNullOrWhiteSpace(jwtSettings.SecretKey) && environment.IsDevelopment())
+    {
+        jwtSettings.SecretKey = Convert.ToBase64String(RandomNumberGenerator.GetBytes(48));
+        Console.Error.WriteLine("QLKH_JWT_SECRET chua duoc dat; da tao secret tam thoi cho phien Development nay.");
+    }
+}
+
+static void ValidateSecurityConfiguration(
     ApiSettings apiSettings,
     JwtSettings jwtSettings,
     IConfiguration configuration,
     IWebHostEnvironment environment)
 {
+    List<string> errors = new List<string>();
+    if (string.IsNullOrWhiteSpace(jwtSettings.SecretKey) || jwtSettings.SecretKey.Length < 32)
+    {
+        errors.Add("QLKH_JWT_SECRET phai duoc dat va co it nhat 32 ky tu.");
+    }
+
+    if (apiSettings.RequireApiKey && string.IsNullOrWhiteSpace(apiSettings.ApiKey))
+    {
+        errors.Add("QLKH_API_KEY phai duoc dat khi RequireApiKey = true.");
+    }
+
     if (environment.IsDevelopment())
     {
+        if (errors.Count > 0)
+        {
+            throw new InvalidOperationException("Cau hinh bao mat khong hop le: " + string.Join(" ", errors));
+        }
+
         return;
     }
 
-    List<string> errors = new List<string>();
     string databasePassword = Environment.GetEnvironmentVariable("QLKH_DB_PASSWORD")
         ?? configuration["DatabaseSettings:Password"]
         ?? string.Empty;
@@ -259,17 +338,6 @@ static void ValidateProductionConfiguration(
     if (!jwtSettings.RequireJwt)
     {
         errors.Add("JwtSettings.RequireJwt phai bat trong moi truong production.");
-    }
-
-    if (string.IsNullOrWhiteSpace(jwtSettings.SecretKey)
-        || string.Equals(jwtSettings.SecretKey, "QuanLyKhoHang-Development-Secret-Key-Change-Me", StringComparison.Ordinal))
-    {
-        errors.Add("JwtSettings.SecretKey phai la secret rieng, khong dung gia tri development.");
-    }
-
-    if (apiSettings.RequireApiKey && string.IsNullOrWhiteSpace(apiSettings.ApiKey))
-    {
-        errors.Add("ApiSettings.ApiKey khong duoc rong khi RequireApiKey = true.");
     }
 
     if (apiSettings.AllowsAnyOrigin())

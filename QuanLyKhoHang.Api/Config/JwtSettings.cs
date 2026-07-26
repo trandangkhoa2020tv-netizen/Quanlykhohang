@@ -23,7 +23,7 @@ public sealed class JwtSettings
     /// <summary>
     /// Khóa ký HMAC SHA-256. Khi triển khai thật nên đổi sang chuỗi bí mật dài và không commit lên git.
     /// </summary>
-    public string SecretKey { get; set; } = "QuanLyKhoHang-Development-Secret-Key-Change-Me";
+    public string SecretKey { get; set; } = string.Empty;
 
     /// <summary>
     /// Thời gian sống của token tính bằng phút.

@@ -31,24 +31,28 @@ namespace QuanLyKhoHang.ApiClients
                     configPath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
                 }
 
-                if (!File.Exists(configPath))
+                if (File.Exists(configPath))
                 {
-                    return settings;
+                    using FileStream stream = File.OpenRead(configPath);
+                    using JsonDocument document = JsonDocument.Parse(stream);
+
+                    if (document.RootElement.TryGetProperty("ApiClientSettings", out JsonElement api))
+                    {
+                        ApplySettingsSection(settings, api);
+                    }
+
+                    ApplyRootSettings(settings, document.RootElement);
                 }
-
-                using FileStream stream = File.OpenRead(configPath);
-                using JsonDocument document = JsonDocument.Parse(stream);
-
-                if (document.RootElement.TryGetProperty("ApiClientSettings", out JsonElement api))
-                {
-                    ApplySettingsSection(settings, api);
-                }
-
-                ApplyRootSettings(settings, document.RootElement);
             }
             catch
             {
-                return settings;
+                // Use defaults and environment variables when the local config is unavailable.
+            }
+
+            string apiKey = Environment.GetEnvironmentVariable("QLKH_API_KEY");
+            if (!string.IsNullOrWhiteSpace(apiKey))
+            {
+                settings.ApiKey = apiKey;
             }
 
             return settings;
@@ -76,11 +80,6 @@ namespace QuanLyKhoHang.ApiClients
                 settings.BaseUrl = apiBaseUrl.GetString() ?? settings.BaseUrl;
             }
 
-            if (root.TryGetProperty("ApiKey", out JsonElement apiKey))
-            {
-                settings.ApiKey = apiKey.GetString() ?? settings.ApiKey;
-            }
-
             if (root.TryGetProperty("AutoStartLocalApi", out JsonElement autoStartLocalApi)
                 && IsBoolean(autoStartLocalApi))
             {
@@ -98,11 +97,6 @@ namespace QuanLyKhoHang.ApiClients
             if (api.TryGetProperty("ApiBaseUrl", out JsonElement apiBaseUrl))
             {
                 settings.BaseUrl = apiBaseUrl.GetString() ?? settings.BaseUrl;
-            }
-
-            if (api.TryGetProperty("ApiKey", out JsonElement apiKey))
-            {
-                settings.ApiKey = apiKey.GetString() ?? settings.ApiKey;
             }
 
             if (api.TryGetProperty("AutoStartLocalApi", out JsonElement autoStartLocalApi)

@@ -39,6 +39,11 @@ public sealed class AuthService : IAuthService
             throw new InvalidOperationException("Vui long nhap ten tai khoan va mat khau.");
         }
 
+        if (input.Username.Length > 100 || input.Password.Length > 256)
+        {
+            throw new InvalidOperationException("Thong tin dang nhap khong hop le.");
+        }
+
         return _taiKhoanRepository.CheckLogin(input.Username.Trim(), input.Password);
     }
 }

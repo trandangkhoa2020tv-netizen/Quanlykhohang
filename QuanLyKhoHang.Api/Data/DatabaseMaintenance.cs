@@ -7,22 +7,19 @@ namespace QuanLyKhoHang.Data
     /// </summary>
     public static class DatabaseMaintenance
     {
-        private const string Admin123456Hash =
-            "pbkdf2$100000$cWxraC1hZG1pbi0xMjM0NTYtc2FsdC12MQ==$D42Ak1eqSBNJflAoIDRvaAMOsz7NF5X7UQjvDwGr0xk=";
-
-        private const string Staff123456Hash =
-            "pbkdf2$100000$cWxraC1zdGFmZi1zYWx0LXYx$dS8VgTfJ0gRv1mu5WUKd36fm95MT4+wSG9lI5rlplZk=";
-
         /// <summary>
         /// Tao hoac cap nhat cac cot va bang bat buoc khi API khoi dong.
         /// </summary>
-        public static void EnsureRuntimeSchema()
+        public static void EnsureRuntimeSchema(bool seedDemoData = false)
         {
             using NpgsqlConnection connection = DbConnection.GetConnection();
             connection.Open();
 
             ExecuteNonQuery(connection, RuntimeSchemaSql);
-            SeedInitialDataIfDatabaseIsEmpty(connection);
+            if (seedDemoData)
+            {
+                SeedInitialDataIfDatabaseIsEmpty(connection);
+            }
 
             ExecuteNonQuery(connection, @"
                 ALTER TABLE IF EXISTS hanghoa ADD COLUMN IF NOT EXISTS is_deleted boolean DEFAULT false;
@@ -206,8 +203,7 @@ namespace QuanLyKhoHang.Data
             CREATE INDEX IF NOT EXISTS idx_auditlog_bang_ban_ghi ON auditlog(bang_du_lieu, ma_ban_ghi);";
 
         /// <summary>
-        /// Them du lieu toi thieu cho database moi de nguoi dung co the dang nhap va tao phieu ngay.
-        /// Khong seed neu database da co du lieu nghiep vu de tranh chen vao DB that.
+        /// Them du lieu nghiep vu mau khi duoc bat ro rang trong moi truong Development.
         /// </summary>
         private static void SeedInitialDataIfDatabaseIsEmpty(NpgsqlConnection connection)
         {
@@ -246,12 +242,7 @@ namespace QuanLyKhoHang.Data
             INSERT INTO hanghoa (ma_hanghoa, ten_hanghoa, ma_loaihang, ma_nhacungcap, gia_nhap, gia_ban, so_luong_ton, don_vi_tinh, ghi_chu) VALUES
                 (1, 'Laptop Dell', 1, 1, 5000000, 6500000, 10, 'Cai', 'Laptop van phong'),
                 (2, 'Ao thun nam', 2, 2, 50000, 80000, 50, 'Cai', 'Ao thun co ban'),
-                (3, 'Mi goi', 3, 1, 3000, 5000, 200, 'Goi', 'Thuc pham nhanh');
-
-            INSERT INTO taikhoan (ma_taikhoan, ma_nhanvien, ten_taikhoan, mat_khau, vai_tro, trang_thai) VALUES
-                (1, 1, 'admin', 'pbkdf2$100000$cWxraC1hZG1pbi0xMjM0NTYtc2FsdC12MQ==$D42Ak1eqSBNJflAoIDRvaAMOsz7NF5X7UQjvDwGr0xk=', 'Admin', true),
-                (2, 2, 'nhanvienkho', 'pbkdf2$100000$cWxraC1zdGFmZi1zYWx0LXYx$dS8VgTfJ0gRv1mu5WUKd36fm95MT4+wSG9lI5rlplZk=', 'NhanVien', true),
-                (3, 3, 'nhanvienbanhang', 'pbkdf2$100000$cWxraC1zdGFmZi1zYWx0LXYx$dS8VgTfJ0gRv1mu5WUKd36fm95MT4+wSG9lI5rlplZk=', 'NhanVien', true);";
+                (3, 'Mi goi', 3, 1, 3000, 5000, 200, 'Goi', 'Thuc pham nhanh');";
 
         /// <summary>
         /// Đồng bộ các sequence tự tăng với dữ liệu hiện có để tránh trùng khóa sau khi import dữ liệu mẫu.
@@ -273,69 +264,6 @@ namespace QuanLyKhoHang.Data
                     Console.Error.WriteLine($"Khong the dong bo sequence {column.TableName}.{column.ColumnName}: {ex.Message}");
                 }
             }
-        }
-
-        /// <summary>
-        /// Dong bo mat khau mau sang PBKDF2 de database cu van dang nhap duoc sau khi tat plain text/SHA-256.
-        /// </summary>
-        public static void EnsureSampleAccountPasswords()
-        {
-            using NpgsqlConnection connection = DbConnection.GetConnection();
-            connection.Open();
-
-            UpdatePasswordIfCurrentValueMatches(
-                connection,
-                "admin",
-                Admin123456Hash,
-                new[]
-                {
-                    "admin123",
-                    "123456",
-                    "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
-                    "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-                    "pbkdf2$100000$cWxraC1hZG1pbi1zYWx0LXYx$lOctHBqPmdhFZLUgAMvE2r5aknrFc/20Khp5yLTyr+s="
-                });
-
-            UpdatePasswordIfCurrentValueMatches(
-                connection,
-                "nhanvienkho",
-                Staff123456Hash,
-                new[]
-                {
-                    "123456",
-                    "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
-                });
-
-            UpdatePasswordIfCurrentValueMatches(
-                connection,
-                "nhanvienbanhang",
-                Staff123456Hash,
-                new[]
-                {
-                    "123456",
-                    "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
-                });
-        }
-
-        /// <summary>
-        /// Cap nhat hash mat khau cho tai khoan mau neu database dang giu mat khau cu.
-        /// </summary>
-        private static void UpdatePasswordIfCurrentValueMatches(
-            NpgsqlConnection connection,
-            string username,
-            string newPasswordHash,
-            string[] oldPasswordValues)
-        {
-            const string sql = @"UPDATE taikhoan
-                                 SET mat_khau = @newPasswordHash
-                                 WHERE ten_taikhoan = @username
-                                   AND mat_khau = ANY(@oldPasswordValues)";
-
-            using NpgsqlCommand command = new NpgsqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@newPasswordHash", newPasswordHash);
-            command.Parameters.AddWithValue("@username", username);
-            command.Parameters.AddWithValue("@oldPasswordValues", oldPasswordValues);
-            command.ExecuteNonQuery();
         }
 
         /// <summary>

@@ -66,7 +66,7 @@ public static class DesktopClientLauncher
                         projectDirectory,
                         "bin",
                         configuration,
-                        "net10.0-windows",
+                        "net9.0-windows",
                         executableName);
 
                     if (File.Exists(desktopExecutable))
