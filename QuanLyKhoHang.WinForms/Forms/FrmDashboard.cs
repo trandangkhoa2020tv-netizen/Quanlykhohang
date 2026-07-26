@@ -27,6 +27,7 @@ namespace QuanLyKhoHang.Forms
 
             _regularCardsRowHeight = tlpPage.RowStyles[1].Height;
             _regularPageHeight = tlpPage.Height;
+            ApplySimpleDashboardAppearance();
             ConfigureCustomerGridFormats();
             pnlScroll.Resize += (_, _) => ApplyResponsiveLayout();
             ApplyResponsiveLayout();
@@ -150,6 +151,44 @@ namespace QuanLyKhoHang.Forms
             totalValueColumn.DefaultCellStyle.FormatProvider = VietnameseCulture;
         }
 
+        private void ApplySimpleDashboardAppearance()
+        {
+            BackColor = SystemColors.Control;
+            pnlScroll.BackColor = SystemColors.Control;
+            tlpPage.BackColor = SystemColors.Control;
+
+            Panel[] summaryPanels = { cardHangHoa, cardKhachHang, cardNhanVien, cardGiaTriKho };
+            foreach (Panel panel in summaryPanels)
+            {
+                panel.BackColor = SystemColors.Control;
+                panel.BorderStyle = BorderStyle.FixedSingle;
+            }
+
+            pnlAccentHangHoa.Visible = false;
+            pnlAccentKhachHang.Visible = false;
+            pnlAccentNhanVien.Visible = false;
+            pnlAccentGiaTriKho.Visible = false;
+
+            Label[] summaryValues = { lblHangHoaValue, lblKhachHangValue, lblNhanVienValue, lblGiaTriKhoValue };
+            foreach (Label label in summaryValues)
+            {
+                label.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+                label.ForeColor = Color.FromArgb(30, 64, 175);
+            }
+
+            Panel[] dataPanels = { pnlNhapXuat, pnlDanhMuc, pnlTonKho, pnlKhachHang };
+            foreach (Panel panel in dataPanels)
+            {
+                panel.BackColor = Color.White;
+                panel.BorderStyle = BorderStyle.FixedSingle;
+            }
+
+            btnTaiLai.BackColor = Color.White;
+            btnTaiLai.ForeColor = SystemColors.ControlText;
+            btnTaiLai.FlatAppearance.BorderColor = SystemColors.ControlDark;
+            btnTaiLai.FlatAppearance.BorderSize = 1;
+        }
+
         private void DashboardPanel_Paint(object sender, PaintEventArgs e)
         {
             if (sender is not Panel panel)
@@ -157,7 +196,7 @@ namespace QuanLyKhoHang.Forms
                 return;
             }
 
-            using Pen borderPen = new Pen(Color.FromArgb(226, 232, 240));
+            using Pen borderPen = new Pen(SystemColors.ControlDark);
             e.Graphics.DrawRectangle(
                 borderPen,
                 0,

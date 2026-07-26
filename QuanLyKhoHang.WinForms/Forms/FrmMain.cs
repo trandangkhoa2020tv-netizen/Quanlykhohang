@@ -339,7 +339,7 @@ namespace QuanLyKhoHang.Forms
             cmsUser.Items[0].Text = $"Tài khoản: {UserSession.TenTaiKhoan}";
             cmsUser.Items[1].Text = $"Quyền hạn: {UserSession.VaiTro}";
 
-            menuDangXuat.Text = "Đăng xuất / Chuyển tài khoản";
+            menuDangXuat.Text = "Đăng xuất";
             menuTaiKhoan.Enabled = false;
             menuChucVu.Enabled = false;
 
@@ -419,7 +419,7 @@ namespace QuanLyKhoHang.Forms
             OpenChildForm(new FrmHangHoa(UserSession.VaiTro));
         }
 
-         /// <summary>Mở trang quản lý nhà cung cấp và loại hàng.</summary>
+        /// <summary>Mở trang quản lý nhà cung cấp và loại hàng.</summary>
         private void btnDanhMuc_Click(object sender, EventArgs e)
         {
             SetActiveMenu(btnDanhMuc);
@@ -466,6 +466,11 @@ namespace QuanLyKhoHang.Forms
         /// Xu ly khi nguoi dung bam vao label phien ban; hien tai chua co thao tac can thuc hien.
         /// </summary>
         private void lblVersion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlContent_Paint(object sender, PaintEventArgs e)
         {
 
         }

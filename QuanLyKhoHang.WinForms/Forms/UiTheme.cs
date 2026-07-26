@@ -10,23 +10,14 @@ namespace QuanLyKhoHang.Forms
     /// </summary>
     internal static class UiTheme
     {
-        private static readonly Color PageBackColor = Color.FromArgb(248, 250, 252);
-        private static readonly Color SurfaceColor = Color.White;
-        private static readonly Color BorderColor = Color.FromArgb(226, 232, 240);
-        private static readonly Color InputBorderColor = Color.FromArgb(203, 213, 225);
-        private static readonly Color TextColor = Color.FromArgb(15, 23, 42);
-        private static readonly Color MutedTextColor = Color.FromArgb(71, 85, 105);
-        private static readonly Color TitleColor = Color.FromArgb(30, 58, 138);
-        private static readonly Color HeaderBackColor = Color.FromArgb(239, 246, 255);
-        private static readonly Color SelectionBackColor = Color.FromArgb(37, 99, 235);
+        private const float EmphasisFontSize = 10F;
 
         /// <summary>
         /// Thiết lập màu nền, font chữ và duyệt toàn bộ control trên form để áp dụng style.
         /// </summary>
         public static void Apply(Form form)
         {
-            form.BackColor = PageBackColor;
-            form.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
+            form.BackColor = SystemColors.Control;
             // Cac form nay duoc nhung vao pnlContent; padding o day lam cat mat
             // cac control co bo cuc co dinh khi cua so nho hon 1200px.
             form.Padding = new Padding(0);
@@ -55,6 +46,7 @@ namespace QuanLyKhoHang.Forms
             Button searchButton = new Button
             {
                 Name = "btnTimKiem",
+                Text = "Tìm kiếm",
                 Location = new Point(searchTextBox.Right + 10, Math.Max(0, searchTextBox.Top - 1)),
                 Size = new Size(90, 35),
                 Anchor = searchTextBox.Anchor
@@ -165,12 +157,17 @@ namespace QuanLyKhoHang.Forms
         /// </summary>
         private static void ApplyPanel(Panel panel)
         {
-            panel.BackColor = SurfaceColor;
-
-            if (panel.Name == "pnlTopControls" || panel.Name == "pnlTop" || panel.Name == "pnlBottom")
+            if (panel.Name == "pnlBottom")
             {
-                panel.BorderStyle = BorderStyle.FixedSingle;
-                panel.Padding = new Padding(18);
+                return;
+            }
+
+            panel.BackColor = SystemColors.Control;
+
+            if (panel.Name == "pnlTopControls" || panel.Name == "pnlTop")
+            {
+                panel.BorderStyle = BorderStyle.None;
+                panel.Padding = Padding.Empty;
             }
         }
 
@@ -179,10 +176,9 @@ namespace QuanLyKhoHang.Forms
         /// </summary>
         private static void ApplyGroupBox(GroupBox groupBox)
         {
-            groupBox.ForeColor = TextColor;
-            groupBox.BackColor = SurfaceColor;
-            groupBox.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            groupBox.Padding = new Padding(12, 10, 12, 12);
+            groupBox.ForeColor = SystemColors.ControlText;
+            groupBox.BackColor = SystemColors.Control;
+            groupBox.Font = SystemFonts.MessageBoxFont;
         }
 
         /// <summary>
@@ -190,29 +186,30 @@ namespace QuanLyKhoHang.Forms
         /// </summary>
         private static void ApplyLabel(Label label)
         {
-            label.ForeColor = TextColor;
-            label.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
-
-            if (label.Name.StartsWith("lblTitle", StringComparison.OrdinalIgnoreCase))
+            // Title labels keep the font, color, and sizing configured in each form's Designer.
+            if (string.Equals(label.Tag?.ToString(), "Title", StringComparison.OrdinalIgnoreCase) ||
+                label.Name.StartsWith("lblTitle", StringComparison.OrdinalIgnoreCase) ||
+                label.Name.StartsWith("lblTieuDe", StringComparison.OrdinalIgnoreCase))
             {
-                label.ForeColor = TitleColor;
-                label.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+                return;
             }
-            else if (label.Name == "lblTimKiem")
+
+            label.ForeColor = SystemColors.ControlText;
+            label.Font = SystemFonts.MessageBoxFont;
+
+            if (label.Name == "lblTimKiem")
             {
                 label.Visible = false;
             }
             else if (label.Name == "lblLichSuTitle")
             {
-                label.ForeColor = TitleColor;
-                label.BackColor = HeaderBackColor;
-                label.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-                label.Padding = new Padding(12, 0, 0, 0);
+                label.BackColor = SystemColors.Control;
+                label.Font = new Font(SystemFonts.MessageBoxFont, FontStyle.Bold);
+                label.Padding = Padding.Empty;
             }
             else if (label.Name == "lblTongTien")
             {
-                label.ForeColor = Color.FromArgb(185, 28, 28);
-                label.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+                label.Font = new Font(SystemFonts.MessageBoxFont.FontFamily, EmphasisFontSize, FontStyle.Bold);
             }
         }
 
@@ -221,10 +218,10 @@ namespace QuanLyKhoHang.Forms
         /// </summary>
         private static void ApplyTextBox(TextBox textBox)
         {
-            textBox.BorderStyle = BorderStyle.FixedSingle;
-            textBox.BackColor = Color.White;
-            textBox.ForeColor = TextColor;
-            textBox.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
+            textBox.BorderStyle = BorderStyle.Fixed3D;
+            textBox.BackColor = SystemColors.Window;
+            textBox.ForeColor = SystemColors.WindowText;
+            textBox.Font = SystemFonts.MessageBoxFont;
 
             if (string.Equals(textBox.Name, "txtTimKiem", StringComparison.OrdinalIgnoreCase))
             {
@@ -243,9 +240,9 @@ namespace QuanLyKhoHang.Forms
         private static void ApplyComboBox(ComboBox comboBox)
         {
             comboBox.FlatStyle = FlatStyle.Standard;
-            comboBox.BackColor = Color.White;
-            comboBox.ForeColor = TextColor;
-            comboBox.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
+            comboBox.BackColor = SystemColors.Window;
+            comboBox.ForeColor = SystemColors.WindowText;
+            comboBox.Font = SystemFonts.MessageBoxFont;
             comboBox.IntegralHeight = false;
             comboBox.DropDownHeight = 320;
         }
@@ -255,12 +252,18 @@ namespace QuanLyKhoHang.Forms
         /// </summary>
         private static void ApplyButton(Button button)
         {
-            button.FlatStyle = FlatStyle.Flat;
-            button.FlatAppearance.BorderColor = InputBorderColor;
-            button.FlatAppearance.MouseDownBackColor = Color.FromArgb(219, 234, 254);
-            button.FlatAppearance.MouseOverBackColor = Color.FromArgb(239, 246, 255);
-            button.Cursor = Cursors.Hand;
-            button.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            if (button.Name is "btnLuuPhieu" or "btnExcel" or "btnPdf")
+            {
+                ApplyDocumentActionButton(button);
+                return;
+            }
+
+            button.FlatStyle = FlatStyle.Standard;
+            button.UseVisualStyleBackColor = true;
+            button.BackColor = SystemColors.Control;
+            button.ForeColor = SystemColors.ControlText;
+            button.Cursor = Cursors.Default;
+            button.Font = SystemFonts.MessageBoxFont;
 
             string action = GetButtonAction(button.Name);
             switch (action)
@@ -310,11 +313,34 @@ namespace QuanLyKhoHang.Forms
                 default:
                     if (button.BackColor == SystemColors.Control || button.BackColor == Color.Empty)
                     {
-                        button.BackColor = Color.White;
-                        button.ForeColor = TextColor;
+                        button.BackColor = SystemColors.Control;
+                        button.ForeColor = SystemColors.ControlText;
                         button.FlatAppearance.BorderSize = 1;
                     }
                     break;
+            }
+        }
+
+        private static void ApplyDocumentActionButton(Button button)
+        {
+            button.FlatStyle = FlatStyle.Flat;
+            button.UseVisualStyleBackColor = false;
+            button.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            button.Cursor = Cursors.Hand;
+            button.Padding = new Padding(10, 0, 10, 0);
+            button.FlatAppearance.BorderSize = 0;
+
+            if (button.Name == "btnLuuPhieu")
+            {
+                SetSolidButton(button, Color.FromArgb(37, 99, 235));
+            }
+            else if (button.Name == "btnExcel")
+            {
+                SetSolidButton(button, Color.FromArgb(21, 128, 61));
+            }
+            else
+            {
+                SetSolidButton(button, Color.FromArgb(185, 28, 28));
             }
         }
 
@@ -324,7 +350,7 @@ namespace QuanLyKhoHang.Forms
         /// </summary>
         private static string GetButtonAction(string buttonName)
         {
-            string name = buttonName ?? string.Empty;
+            string name = string.Empty;
 
             if (name.Equals("btnThemMon", StringComparison.OrdinalIgnoreCase))
             {
@@ -352,24 +378,28 @@ namespace QuanLyKhoHang.Forms
             }
 
             if (name.Equals("btnThem", StringComparison.OrdinalIgnoreCase) ||
+                name.StartsWith("btnThem", StringComparison.OrdinalIgnoreCase) ||
                 name.StartsWith("btnDanhMucThem", StringComparison.OrdinalIgnoreCase))
             {
                 return "add";
             }
 
             if (name.Equals("btnSua", StringComparison.OrdinalIgnoreCase) ||
+                name.StartsWith("btnSua", StringComparison.OrdinalIgnoreCase) ||
                 name.StartsWith("btnDanhMucSua", StringComparison.OrdinalIgnoreCase))
             {
                 return "edit";
             }
 
             if (name.Equals("btnXoa", StringComparison.OrdinalIgnoreCase) ||
+                name.StartsWith("btnXoa", StringComparison.OrdinalIgnoreCase) ||
                 name.StartsWith("btnDanhMucXoa", StringComparison.OrdinalIgnoreCase))
             {
                 return "delete";
             }
 
             if (name.Equals("btnLamMoi", StringComparison.OrdinalIgnoreCase) ||
+                name.StartsWith("btnLamMoi", StringComparison.OrdinalIgnoreCase) ||
                 name.StartsWith("btnDanhMucLamMoi", StringComparison.OrdinalIgnoreCase))
             {
                 return "refresh";
@@ -395,14 +425,14 @@ namespace QuanLyKhoHang.Forms
         /// </summary>
         private static void ApplyGrid(DataGridView grid)
         {
-            grid.BackgroundColor = Color.White;
-            grid.BorderStyle = BorderStyle.FixedSingle;
-            grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            grid.GridColor = Color.FromArgb(229, 231, 235);
+            grid.BackgroundColor = SystemColors.Window;
+            grid.BorderStyle = BorderStyle.Fixed3D;
+            grid.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+            grid.GridColor = SystemColors.ControlLight;
             grid.RowHeadersVisible = false;
-            grid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            grid.EnableHeadersVisualStyles = false;
-            grid.RowTemplate.Height = 34;
+            grid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Raised;
+            grid.EnableHeadersVisualStyles = true;
+            grid.RowTemplate.Height = 28;
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grid.MultiSelect = false;
@@ -414,25 +444,21 @@ namespace QuanLyKhoHang.Forms
             grid.ScrollBars = ScrollBars.Both;
             grid.DefaultCellStyle.NullValue = string.Empty;
 
-            grid.ColumnHeadersDefaultCellStyle.BackColor = HeaderBackColor;
-            grid.ColumnHeadersDefaultCellStyle.ForeColor = TextColor;
-            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            grid.ColumnHeadersDefaultCellStyle.SelectionBackColor = HeaderBackColor;
-            grid.ColumnHeadersDefaultCellStyle.SelectionForeColor = TextColor;
-            grid.ColumnHeadersHeight = 38;
+            grid.ColumnHeadersDefaultCellStyle.Font = new Font(SystemFonts.MessageBoxFont, FontStyle.Bold);
+            grid.ColumnHeadersHeight = 28;
 
-            grid.DefaultCellStyle.BackColor = Color.White;
-            grid.DefaultCellStyle.ForeColor = TextColor;
-            grid.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular);
-            grid.DefaultCellStyle.SelectionBackColor = SelectionBackColor;
-            grid.DefaultCellStyle.SelectionForeColor = Color.White;
-            grid.DefaultCellStyle.Padding = new Padding(4, 0, 4, 0);
+            grid.DefaultCellStyle.BackColor = SystemColors.Window;
+            grid.DefaultCellStyle.ForeColor = SystemColors.WindowText;
+            grid.DefaultCellStyle.Font = SystemFonts.MessageBoxFont;
+            grid.DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
+            grid.DefaultCellStyle.SelectionForeColor = SystemColors.HighlightText;
+            grid.DefaultCellStyle.Padding = Padding.Empty;
 
-            grid.AlternatingRowsDefaultCellStyle.BackColor = PageBackColor;
-            grid.AlternatingRowsDefaultCellStyle.ForeColor = TextColor;
-            grid.AlternatingRowsDefaultCellStyle.SelectionBackColor = SelectionBackColor;
-            grid.AlternatingRowsDefaultCellStyle.SelectionForeColor = Color.White;
-            grid.AlternatingRowsDefaultCellStyle.Padding = new Padding(4, 0, 4, 0);
+            grid.AlternatingRowsDefaultCellStyle.BackColor = SystemColors.Window;
+            grid.AlternatingRowsDefaultCellStyle.ForeColor = SystemColors.WindowText;
+            grid.AlternatingRowsDefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
+            grid.AlternatingRowsDefaultCellStyle.SelectionForeColor = SystemColors.HighlightText;
+            grid.AlternatingRowsDefaultCellStyle.Padding = Padding.Empty;
         }
 
         /// <summary>

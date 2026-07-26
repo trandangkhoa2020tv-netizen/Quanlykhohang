@@ -98,17 +98,17 @@ namespace QuanLyKhoHang.Forms
             lblGiaTriKhoNote = new Label();
             tlpContent = new TableLayoutPanel();
             pnlNhapXuat = new Panel();
-            chartNhapXuat = new DashboardChart();
             lblNhapXuatSubtitle = new Label();
             lblNhapXuatTitle = new Label();
+            chartNhapXuat = new DashboardChart();
             pnlDanhMuc = new Panel();
-            chartDanhMuc = new DashboardChart();
             lblDanhMucSubtitle = new Label();
             lblDanhMucTitle = new Label();
+            chartDanhMuc = new DashboardChart();
             pnlTonKho = new Panel();
-            chartTonKho = new DashboardChart();
             lblTonKhoSubtitle = new Label();
             lblTonKhoTitle = new Label();
+            chartTonKho = new DashboardChart();
             pnlKhachHang = new Panel();
             dgvKhachHang = new DataGridView();
             colTenKhachHang = new DataGridViewTextBoxColumn();
@@ -154,12 +154,12 @@ namespace QuanLyKhoHang.Forms
             tlpPage.Dock = DockStyle.Top;
             tlpPage.Location = new Point(0, 0);
             tlpPage.Name = "tlpPage";
-            tlpPage.Padding = new Padding(20, 14, 20, 20);
+            tlpPage.Padding = new Padding(20, 12, 20, 20);
             tlpPage.RowCount = 3;
-            tlpPage.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
+            tlpPage.RowStyles.Add(new RowStyle(SizeType.Absolute, 90F));
             tlpPage.RowStyles.Add(new RowStyle(SizeType.Absolute, 132F));
             tlpPage.RowStyles.Add(new RowStyle(SizeType.Absolute, 710F));
-            tlpPage.Size = new Size(919, 960);
+            tlpPage.Size = new Size(919, 968);
             tlpPage.TabIndex = 0;
             // 
             // pnlHeader
@@ -169,10 +169,10 @@ namespace QuanLyKhoHang.Forms
             pnlHeader.Controls.Add(lblTrangThai);
             pnlHeader.Controls.Add(btnTaiLai);
             pnlHeader.Dock = DockStyle.Fill;
-            pnlHeader.Location = new Point(26, 14);
-            pnlHeader.Margin = new Padding(6, 0, 6, 8);
+            pnlHeader.Location = new Point(20, 12);
+            pnlHeader.Margin = new Padding(0, 0, 0, 8);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(867, 74);
+            pnlHeader.Size = new Size(879, 82);
             pnlHeader.TabIndex = 0;
             // 
             // lblTitle
@@ -180,9 +180,9 @@ namespace QuanLyKhoHang.Forms
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(30, 58, 138);
-            lblTitle.Location = new Point(0, 1);
+            lblTitle.Location = new Point(14, 9);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(408, 46);
+            lblTitle.Size = new Size(361, 41);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "THỐNG KÊ TỔNG QUAN";
             // 
@@ -191,7 +191,7 @@ namespace QuanLyKhoHang.Forms
             lblSubtitle.AutoSize = true;
             lblSubtitle.Font = new Font("Segoe UI", 9.5F);
             lblSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblSubtitle.Location = new Point(2, 44);
+            lblSubtitle.Location = new Point(2, 50);
             lblSubtitle.Name = "lblSubtitle";
             lblSubtitle.Size = new Size(432, 21);
             lblSubtitle.TabIndex = 1;
@@ -202,7 +202,7 @@ namespace QuanLyKhoHang.Forms
             lblTrangThai.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblTrangThai.Font = new Font("Segoe UI", 8.5F);
             lblTrangThai.ForeColor = Color.FromArgb(100, 116, 139);
-            lblTrangThai.Location = new Point(559, 48);
+            lblTrangThai.Location = new Point(559, 54);
             lblTrangThai.Name = "lblTrangThai";
             lblTrangThai.Size = new Size(180, 22);
             lblTrangThai.TabIndex = 2;
@@ -238,7 +238,7 @@ namespace QuanLyKhoHang.Forms
             tlpCards.Controls.Add(cardNhanVien, 2, 0);
             tlpCards.Controls.Add(cardGiaTriKho, 3, 0);
             tlpCards.Dock = DockStyle.Fill;
-            tlpCards.Location = new Point(20, 96);
+            tlpCards.Location = new Point(20, 102);
             tlpCards.Margin = new Padding(0);
             tlpCards.Name = "tlpCards";
             tlpCards.RowCount = 1;
@@ -492,13 +492,13 @@ namespace QuanLyKhoHang.Forms
             tlpContent.Controls.Add(pnlTonKho, 0, 1);
             tlpContent.Controls.Add(pnlKhachHang, 1, 1);
             tlpContent.Dock = DockStyle.Fill;
-            tlpContent.Location = new Point(20, 228);
+            tlpContent.Location = new Point(20, 234);
             tlpContent.Margin = new Padding(0);
             tlpContent.Name = "tlpContent";
             tlpContent.RowCount = 2;
             tlpContent.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tlpContent.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tlpContent.Size = new Size(879, 712);
+            tlpContent.Size = new Size(879, 714);
             tlpContent.TabIndex = 2;
             // 
             // pnlNhapXuat
@@ -512,21 +512,9 @@ namespace QuanLyKhoHang.Forms
             pnlNhapXuat.Margin = new Padding(6);
             pnlNhapXuat.Name = "pnlNhapXuat";
             pnlNhapXuat.Padding = new Padding(8);
-            pnlNhapXuat.Size = new Size(427, 344);
+            pnlNhapXuat.Size = new Size(427, 345);
             pnlNhapXuat.TabIndex = 0;
             pnlNhapXuat.Paint += DashboardPanel_Paint;
-            // 
-            // chartNhapXuat
-            // 
-            chartNhapXuat.BackColor = Color.White;
-            chartNhapXuat.Dock = DockStyle.Fill;
-            chartNhapXuat.Font = new Font("Segoe UI", 8.5F);
-            chartNhapXuat.ForeColor = Color.FromArgb(51, 65, 85);
-            chartNhapXuat.Location = new Point(8, 72);
-            chartNhapXuat.Margin = new Padding(10);
-            chartNhapXuat.Name = "chartNhapXuat";
-            chartNhapXuat.Size = new Size(411, 264);
-            chartNhapXuat.TabIndex = 2;
             // 
             // lblNhapXuatSubtitle
             // 
@@ -551,9 +539,17 @@ namespace QuanLyKhoHang.Forms
             lblNhapXuatTitle.Size = new Size(411, 34);
             lblNhapXuatTitle.TabIndex = 0;
             lblNhapXuatTitle.Text = "Nhập – xuất kho theo tháng";
-            // 
+            //
+            // chartNhapXuat
+            //
+            chartNhapXuat.Dock = DockStyle.Fill;
+            chartNhapXuat.Location = new Point(8, 72);
+            chartNhapXuat.Name = "chartNhapXuat";
+            chartNhapXuat.Size = new Size(411, 265);
+            chartNhapXuat.TabIndex = 2;
+            //
             // pnlDanhMuc
-            // 
+            //
             pnlDanhMuc.BackColor = Color.White;
             pnlDanhMuc.Controls.Add(chartDanhMuc);
             pnlDanhMuc.Controls.Add(lblDanhMucSubtitle);
@@ -563,21 +559,9 @@ namespace QuanLyKhoHang.Forms
             pnlDanhMuc.Margin = new Padding(6);
             pnlDanhMuc.Name = "pnlDanhMuc";
             pnlDanhMuc.Padding = new Padding(8);
-            pnlDanhMuc.Size = new Size(428, 344);
+            pnlDanhMuc.Size = new Size(428, 345);
             pnlDanhMuc.TabIndex = 1;
             pnlDanhMuc.Paint += DashboardPanel_Paint;
-            // 
-            // chartDanhMuc
-            // 
-            chartDanhMuc.BackColor = Color.White;
-            chartDanhMuc.Dock = DockStyle.Fill;
-            chartDanhMuc.Font = new Font("Segoe UI", 8.5F);
-            chartDanhMuc.ForeColor = Color.FromArgb(51, 65, 85);
-            chartDanhMuc.Location = new Point(8, 72);
-            chartDanhMuc.Margin = new Padding(10);
-            chartDanhMuc.Name = "chartDanhMuc";
-            chartDanhMuc.Size = new Size(412, 264);
-            chartDanhMuc.TabIndex = 2;
             // 
             // lblDanhMucSubtitle
             // 
@@ -602,33 +586,29 @@ namespace QuanLyKhoHang.Forms
             lblDanhMucTitle.Size = new Size(412, 34);
             lblDanhMucTitle.TabIndex = 0;
             lblDanhMucTitle.Text = "Hàng hóa theo danh mục";
-            // 
+            //
+            // chartDanhMuc
+            //
+            chartDanhMuc.Dock = DockStyle.Fill;
+            chartDanhMuc.Location = new Point(8, 72);
+            chartDanhMuc.Name = "chartDanhMuc";
+            chartDanhMuc.Size = new Size(412, 265);
+            chartDanhMuc.TabIndex = 2;
+            //
             // pnlTonKho
-            // 
+            //
             pnlTonKho.BackColor = Color.White;
             pnlTonKho.Controls.Add(chartTonKho);
             pnlTonKho.Controls.Add(lblTonKhoSubtitle);
             pnlTonKho.Controls.Add(lblTonKhoTitle);
             pnlTonKho.Dock = DockStyle.Fill;
-            pnlTonKho.Location = new Point(6, 362);
+            pnlTonKho.Location = new Point(6, 363);
             pnlTonKho.Margin = new Padding(6);
             pnlTonKho.Name = "pnlTonKho";
             pnlTonKho.Padding = new Padding(8);
-            pnlTonKho.Size = new Size(427, 344);
+            pnlTonKho.Size = new Size(427, 345);
             pnlTonKho.TabIndex = 2;
             pnlTonKho.Paint += DashboardPanel_Paint;
-            // 
-            // chartTonKho
-            // 
-            chartTonKho.BackColor = Color.White;
-            chartTonKho.Dock = DockStyle.Fill;
-            chartTonKho.Font = new Font("Segoe UI", 8.5F);
-            chartTonKho.ForeColor = Color.FromArgb(51, 65, 85);
-            chartTonKho.Location = new Point(8, 72);
-            chartTonKho.Margin = new Padding(10);
-            chartTonKho.Name = "chartTonKho";
-            chartTonKho.Size = new Size(411, 264);
-            chartTonKho.TabIndex = 2;
             // 
             // lblTonKhoSubtitle
             // 
@@ -653,19 +633,27 @@ namespace QuanLyKhoHang.Forms
             lblTonKhoTitle.Size = new Size(411, 34);
             lblTonKhoTitle.TabIndex = 0;
             lblTonKhoTitle.Text = "Sản phẩm tồn nhiều nhất";
-            // 
+            //
+            // chartTonKho
+            //
+            chartTonKho.Dock = DockStyle.Fill;
+            chartTonKho.Location = new Point(8, 72);
+            chartTonKho.Name = "chartTonKho";
+            chartTonKho.Size = new Size(411, 265);
+            chartTonKho.TabIndex = 2;
+            //
             // pnlKhachHang
-            // 
+            //
             pnlKhachHang.BackColor = Color.White;
             pnlKhachHang.Controls.Add(dgvKhachHang);
             pnlKhachHang.Controls.Add(lblKhachHangChartSubtitle);
             pnlKhachHang.Controls.Add(lblKhachHangChartTitle);
             pnlKhachHang.Dock = DockStyle.Fill;
-            pnlKhachHang.Location = new Point(445, 362);
+            pnlKhachHang.Location = new Point(445, 363);
             pnlKhachHang.Margin = new Padding(6);
             pnlKhachHang.Name = "pnlKhachHang";
             pnlKhachHang.Padding = new Padding(8);
-            pnlKhachHang.Size = new Size(428, 344);
+            pnlKhachHang.Size = new Size(428, 345);
             pnlKhachHang.TabIndex = 3;
             pnlKhachHang.Paint += DashboardPanel_Paint;
             // 
@@ -678,6 +666,8 @@ namespace QuanLyKhoHang.Forms
             dgvKhachHang.BackgroundColor = Color.White;
             dgvKhachHang.BorderStyle = BorderStyle.None;
             dgvKhachHang.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvKhachHang.AutoGenerateColumns = false;
+            dgvKhachHang.Columns.AddRange(new DataGridViewColumn[] { colTenKhachHang, colSoLanMua, colTongGiaTri });
             dgvKhachHang.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(239, 246, 255);
@@ -703,44 +693,40 @@ namespace QuanLyKhoHang.Forms
             dgvKhachHang.Location = new Point(8, 72);
             dgvKhachHang.MultiSelect = false;
             dgvKhachHang.Name = "dgvKhachHang";
-            dgvKhachHang.AutoGenerateColumns = false;
             dgvKhachHang.ReadOnly = true;
             dgvKhachHang.RowHeadersVisible = false;
             dgvKhachHang.RowHeadersWidth = 51;
             dgvKhachHang.RowTemplate.Height = 30;
             dgvKhachHang.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvKhachHang.Size = new Size(412, 264);
+            dgvKhachHang.Size = new Size(412, 265);
             dgvKhachHang.TabIndex = 2;
             // 
             // colTenKhachHang
             // 
+            colTenKhachHang.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             colTenKhachHang.DataPropertyName = "TenKhachHang";
             colTenKhachHang.HeaderText = "Khách hàng";
+            colTenKhachHang.MinimumWidth = 120;
             colTenKhachHang.Name = "colTenKhachHang";
             colTenKhachHang.ReadOnly = true;
-            colTenKhachHang.FillWeight = 45F;
             // 
             // colSoLanMua
             // 
             colSoLanMua.DataPropertyName = "SoLanMua";
-            colSoLanMua.HeaderText = "Số lần";
+            colSoLanMua.HeaderText = "Số lần mua";
+            colSoLanMua.MinimumWidth = 80;
             colSoLanMua.Name = "colSoLanMua";
             colSoLanMua.ReadOnly = true;
-            colSoLanMua.FillWeight = 20F;
+            colSoLanMua.Width = 95;
             // 
             // colTongGiaTri
             // 
             colTongGiaTri.DataPropertyName = "TongGiaTri";
             colTongGiaTri.HeaderText = "Tổng giá trị";
+            colTongGiaTri.MinimumWidth = 100;
             colTongGiaTri.Name = "colTongGiaTri";
             colTongGiaTri.ReadOnly = true;
-            colTongGiaTri.FillWeight = 35F;
-            dgvKhachHang.Columns.AddRange(new DataGridViewColumn[]
-            {
-                colTenKhachHang,
-                colSoLanMua,
-                colTongGiaTri
-            });
+            colTongGiaTri.Width = 120;
             // 
             // lblKhachHangChartSubtitle
             // 
@@ -768,8 +754,8 @@ namespace QuanLyKhoHang.Forms
             // 
             // FrmThongKe
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(940, 739);
             Controls.Add(pnlScroll);

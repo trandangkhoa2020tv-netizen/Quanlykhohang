@@ -217,7 +217,7 @@ namespace QuanLyKhoHang.Forms
                 _tongTienPhieu += Convert.ToDecimal(row["ThanhTien"]);
             }
 
-            lblTongTien.Text = string.Format(new CultureInfo("vi-VN"), "TONG TIEN: {0:N0} VND", _tongTienPhieu);
+            lblTongTien.Text = string.Format(new CultureInfo("vi-VN"), "TỔNG TIỀN: {0:N0} VNĐ", _tongTienPhieu);
         }
 
         /// <summary>

@@ -29,6 +29,7 @@ namespace QuanLyKhoHang.Forms
 
             UiTheme.Apply(this);
             UiTheme.AddSearchButton(txtTimKiem, () => txtTimKiem_TextChanged(this, EventArgs.Empty));
+            UiTheme.PlaceSearchControlsBesideAddButton(pnlTopControls, txtTimKiem, btnLamMoi);
         }
 
         /// <summary>

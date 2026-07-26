@@ -97,10 +97,11 @@ namespace QuanLyKhoHang.Forms
             tabDanhMuc.Controls.Add(tabLoaiHang);
             tabDanhMuc.Dock = DockStyle.Fill;
             tabDanhMuc.Location = new Point(0, 0);
+            tabDanhMuc.Margin = new Padding(4, 4, 4, 4);
             tabDanhMuc.Name = "tabDanhMuc";
             tabDanhMuc.Padding = new Point(12, 8);
             tabDanhMuc.SelectedIndex = 0;
-            tabDanhMuc.Size = new Size(1000, 600);
+            tabDanhMuc.Size = new Size(1748, 750);
             tabDanhMuc.TabIndex = 0;
             // 
             // tabNhaCungCap
@@ -109,9 +110,10 @@ namespace QuanLyKhoHang.Forms
             tabNhaCungCap.Controls.Add(dgvNhaCungCap);
             tabNhaCungCap.Controls.Add(pnlNhaCungCap);
             tabNhaCungCap.Location = new Point(4, 39);
+            tabNhaCungCap.Margin = new Padding(4, 4, 4, 4);
             tabNhaCungCap.Name = "tabNhaCungCap";
-            tabNhaCungCap.Padding = new Padding(8);
-            tabNhaCungCap.Size = new Size(992, 557);
+            tabNhaCungCap.Padding = new Padding(10, 10, 10, 10);
+            tabNhaCungCap.Size = new Size(1740, 707);
             tabNhaCungCap.TabIndex = 0;
             tabNhaCungCap.Text = "Nhà cung cấp";
             // 
@@ -120,12 +122,13 @@ namespace QuanLyKhoHang.Forms
             dgvNhaCungCap.AllowUserToAddRows = false;
             dgvNhaCungCap.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvNhaCungCap.Dock = DockStyle.Fill;
-            dgvNhaCungCap.Location = new Point(8, 228);
+            dgvNhaCungCap.Location = new Point(10, 304);
+            dgvNhaCungCap.Margin = new Padding(4, 4, 4, 4);
             dgvNhaCungCap.Name = "dgvNhaCungCap";
             dgvNhaCungCap.ReadOnly = true;
             dgvNhaCungCap.RowHeadersWidth = 51;
             dgvNhaCungCap.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvNhaCungCap.Size = new Size(976, 321);
+            dgvNhaCungCap.Size = new Size(1720, 393);
             dgvNhaCungCap.TabIndex = 1;
             dgvNhaCungCap.CellClick += dgvNhaCungCap_CellClick;
             // 
@@ -150,9 +153,10 @@ namespace QuanLyKhoHang.Forms
             pnlNhaCungCap.Controls.Add(btnLamMoiNcc);
             pnlNhaCungCap.Controls.Add(txtTimKiemNcc);
             pnlNhaCungCap.Dock = DockStyle.Top;
-            pnlNhaCungCap.Location = new Point(8, 8);
+            pnlNhaCungCap.Location = new Point(10, 10);
+            pnlNhaCungCap.Margin = new Padding(4, 4, 4, 4);
             pnlNhaCungCap.Name = "pnlNhaCungCap";
-            pnlNhaCungCap.Size = new Size(976, 220);
+            pnlNhaCungCap.Size = new Size(1720, 294);
             pnlNhaCungCap.TabIndex = 0;
             // 
             // lblTitleNcc
@@ -160,7 +164,8 @@ namespace QuanLyKhoHang.Forms
             lblTitleNcc.AutoSize = true;
             lblTitleNcc.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblTitleNcc.ForeColor = Color.FromArgb(30, 58, 138);
-            lblTitleNcc.Location = new Point(20, -1);
+            lblTitleNcc.Location = new Point(25, 14);
+            lblTitleNcc.Margin = new Padding(4, 0, 4, 0);
             lblTitleNcc.Name = "lblTitleNcc";
             lblTitleNcc.Size = new Size(384, 41);
             lblTitleNcc.TabIndex = 0;
@@ -169,23 +174,26 @@ namespace QuanLyKhoHang.Forms
             // lblTenNcc
             // 
             lblTenNcc.AutoSize = true;
-            lblTenNcc.Location = new Point(20, 57);
+            lblTenNcc.Location = new Point(25, 85);
+            lblTenNcc.Margin = new Padding(4, 0, 4, 0);
             lblTenNcc.Name = "lblTenNcc";
-            lblTenNcc.Size = new Size(131, 20);
+            lblTenNcc.Size = new Size(127, 20);
             lblTenNcc.TabIndex = 1;
-            lblTenNcc.Text = "Tên nhà cung cấp :";
+            lblTenNcc.Text = "Tên nhà cung cấp:";
             // 
             // txtTenNcc
             // 
-            txtTenNcc.Location = new Point(150, 52);
+            txtTenNcc.Location = new Point(188, 80);
+            txtTenNcc.Margin = new Padding(4, 4, 4, 4);
             txtTenNcc.Name = "txtTenNcc";
-            txtTenNcc.Size = new Size(280, 27);
+            txtTenNcc.Size = new Size(349, 27);
             txtTenNcc.TabIndex = 2;
             // 
             // lblDiaChiNcc
             // 
             lblDiaChiNcc.AutoSize = true;
-            lblDiaChiNcc.Location = new Point(20, 97);
+            lblDiaChiNcc.Location = new Point(25, 135);
+            lblDiaChiNcc.Margin = new Padding(4, 0, 4, 0);
             lblDiaChiNcc.Name = "lblDiaChiNcc";
             lblDiaChiNcc.Size = new Size(58, 20);
             lblDiaChiNcc.TabIndex = 3;
@@ -193,15 +201,17 @@ namespace QuanLyKhoHang.Forms
             // 
             // txtDiaChiNcc
             // 
-            txtDiaChiNcc.Location = new Point(150, 92);
+            txtDiaChiNcc.Location = new Point(188, 130);
+            txtDiaChiNcc.Margin = new Padding(4, 4, 4, 4);
             txtDiaChiNcc.Name = "txtDiaChiNcc";
-            txtDiaChiNcc.Size = new Size(280, 27);
+            txtDiaChiNcc.Size = new Size(349, 27);
             txtDiaChiNcc.TabIndex = 4;
             // 
             // lblSdtNcc
             // 
             lblSdtNcc.AutoSize = true;
-            lblSdtNcc.Location = new Point(470, 57);
+            lblSdtNcc.Location = new Point(588, 85);
+            lblSdtNcc.Margin = new Padding(4, 0, 4, 0);
             lblSdtNcc.Name = "lblSdtNcc";
             lblSdtNcc.Size = new Size(100, 20);
             lblSdtNcc.TabIndex = 5;
@@ -209,15 +219,17 @@ namespace QuanLyKhoHang.Forms
             // 
             // txtSdtNcc
             // 
-            txtSdtNcc.Location = new Point(600, 52);
+            txtSdtNcc.Location = new Point(750, 80);
+            txtSdtNcc.Margin = new Padding(4, 4, 4, 4);
             txtSdtNcc.Name = "txtSdtNcc";
-            txtSdtNcc.Size = new Size(220, 27);
+            txtSdtNcc.Size = new Size(274, 27);
             txtSdtNcc.TabIndex = 6;
             // 
             // lblEmailNcc
             // 
             lblEmailNcc.AutoSize = true;
-            lblEmailNcc.Location = new Point(470, 97);
+            lblEmailNcc.Location = new Point(588, 135);
+            lblEmailNcc.Margin = new Padding(4, 0, 4, 0);
             lblEmailNcc.Name = "lblEmailNcc";
             lblEmailNcc.Size = new Size(49, 20);
             lblEmailNcc.TabIndex = 7;
@@ -225,15 +237,17 @@ namespace QuanLyKhoHang.Forms
             // 
             // txtEmailNcc
             // 
-            txtEmailNcc.Location = new Point(600, 92);
+            txtEmailNcc.Location = new Point(750, 130);
+            txtEmailNcc.Margin = new Padding(4, 4, 4, 4);
             txtEmailNcc.Name = "txtEmailNcc";
-            txtEmailNcc.Size = new Size(220, 27);
+            txtEmailNcc.Size = new Size(274, 27);
             txtEmailNcc.TabIndex = 8;
             // 
             // lblGhiChuNcc
             // 
             lblGhiChuNcc.AutoSize = true;
-            lblGhiChuNcc.Location = new Point(20, 137);
+            lblGhiChuNcc.Location = new Point(25, 185);
+            lblGhiChuNcc.Margin = new Padding(4, 0, 4, 0);
             lblGhiChuNcc.Name = "lblGhiChuNcc";
             lblGhiChuNcc.Size = new Size(61, 20);
             lblGhiChuNcc.TabIndex = 9;
@@ -241,16 +255,18 @@ namespace QuanLyKhoHang.Forms
             // 
             // txtGhiChuNcc
             // 
-            txtGhiChuNcc.Location = new Point(150, 132);
+            txtGhiChuNcc.Location = new Point(188, 180);
+            txtGhiChuNcc.Margin = new Padding(4, 4, 4, 4);
             txtGhiChuNcc.Name = "txtGhiChuNcc";
-            txtGhiChuNcc.Size = new Size(280, 27);
+            txtGhiChuNcc.Size = new Size(349, 27);
             txtGhiChuNcc.TabIndex = 10;
             // 
             // btnThemNcc
             // 
-            btnThemNcc.Location = new Point(150, 172);
+            btnThemNcc.Location = new Point(188, 235);
+            btnThemNcc.Margin = new Padding(4, 4, 4, 4);
             btnThemNcc.Name = "btnThemNcc";
-            btnThemNcc.Size = new Size(95, 35);
+            btnThemNcc.Size = new Size(119, 44);
             btnThemNcc.TabIndex = 11;
             btnThemNcc.Text = "Thêm";
             btnThemNcc.UseVisualStyleBackColor = false;
@@ -258,9 +274,10 @@ namespace QuanLyKhoHang.Forms
             // 
             // btnSuaNcc
             // 
-            btnSuaNcc.Location = new Point(260, 172);
+            btnSuaNcc.Location = new Point(325, 235);
+            btnSuaNcc.Margin = new Padding(4, 4, 4, 4);
             btnSuaNcc.Name = "btnSuaNcc";
-            btnSuaNcc.Size = new Size(95, 35);
+            btnSuaNcc.Size = new Size(119, 44);
             btnSuaNcc.TabIndex = 12;
             btnSuaNcc.Text = "Sửa";
             btnSuaNcc.UseVisualStyleBackColor = false;
@@ -268,9 +285,10 @@ namespace QuanLyKhoHang.Forms
             // 
             // btnXoaNcc
             // 
-            btnXoaNcc.Location = new Point(370, 172);
+            btnXoaNcc.Location = new Point(462, 235);
+            btnXoaNcc.Margin = new Padding(4, 4, 4, 4);
             btnXoaNcc.Name = "btnXoaNcc";
-            btnXoaNcc.Size = new Size(95, 35);
+            btnXoaNcc.Size = new Size(119, 44);
             btnXoaNcc.TabIndex = 13;
             btnXoaNcc.Text = "Xóa";
             btnXoaNcc.UseVisualStyleBackColor = false;
@@ -278,9 +296,10 @@ namespace QuanLyKhoHang.Forms
             // 
             // btnLamMoiNcc
             // 
-            btnLamMoiNcc.Location = new Point(480, 172);
+            btnLamMoiNcc.Location = new Point(600, 235);
+            btnLamMoiNcc.Margin = new Padding(4, 4, 4, 4);
             btnLamMoiNcc.Name = "btnLamMoiNcc";
-            btnLamMoiNcc.Size = new Size(95, 35);
+            btnLamMoiNcc.Size = new Size(119, 44);
             btnLamMoiNcc.TabIndex = 14;
             btnLamMoiNcc.Text = "Làm mới";
             btnLamMoiNcc.UseVisualStyleBackColor = false;
@@ -288,9 +307,10 @@ namespace QuanLyKhoHang.Forms
             // 
             // txtTimKiemNcc
             // 
-            txtTimKiemNcc.Location = new Point(600, 174);
+            txtTimKiemNcc.Location = new Point(750, 238);
+            txtTimKiemNcc.Margin = new Padding(4, 4, 4, 4);
             txtTimKiemNcc.Name = "txtTimKiemNcc";
-            txtTimKiemNcc.Size = new Size(180, 27);
+            txtTimKiemNcc.Size = new Size(224, 27);
             txtTimKiemNcc.TabIndex = 15;
             // 
             // tabLoaiHang
@@ -299,9 +319,10 @@ namespace QuanLyKhoHang.Forms
             tabLoaiHang.Controls.Add(dgvLoaiHang);
             tabLoaiHang.Controls.Add(pnlLoaiHang);
             tabLoaiHang.Location = new Point(4, 39);
+            tabLoaiHang.Margin = new Padding(4, 4, 4, 4);
             tabLoaiHang.Name = "tabLoaiHang";
-            tabLoaiHang.Padding = new Padding(8);
-            tabLoaiHang.Size = new Size(992, 557);
+            tabLoaiHang.Padding = new Padding(10, 10, 10, 10);
+            tabLoaiHang.Size = new Size(1740, 707);
             tabLoaiHang.TabIndex = 1;
             tabLoaiHang.Text = "Loại hàng";
             // 
@@ -310,12 +331,13 @@ namespace QuanLyKhoHang.Forms
             dgvLoaiHang.AllowUserToAddRows = false;
             dgvLoaiHang.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvLoaiHang.Dock = DockStyle.Fill;
-            dgvLoaiHang.Location = new Point(8, 198);
+            dgvLoaiHang.Location = new Point(10, 267);
+            dgvLoaiHang.Margin = new Padding(4, 4, 4, 4);
             dgvLoaiHang.Name = "dgvLoaiHang";
             dgvLoaiHang.ReadOnly = true;
             dgvLoaiHang.RowHeadersWidth = 51;
             dgvLoaiHang.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvLoaiHang.Size = new Size(976, 351);
+            dgvLoaiHang.Size = new Size(1720, 430);
             dgvLoaiHang.TabIndex = 1;
             dgvLoaiHang.CellClick += dgvLoaiHang_CellClick;
             // 
@@ -334,9 +356,10 @@ namespace QuanLyKhoHang.Forms
             pnlLoaiHang.Controls.Add(btnLamMoiLoai);
             pnlLoaiHang.Controls.Add(txtTimKiemLoai);
             pnlLoaiHang.Dock = DockStyle.Top;
-            pnlLoaiHang.Location = new Point(8, 8);
+            pnlLoaiHang.Location = new Point(10, 10);
+            pnlLoaiHang.Margin = new Padding(4, 4, 4, 4);
             pnlLoaiHang.Name = "pnlLoaiHang";
-            pnlLoaiHang.Size = new Size(976, 190);
+            pnlLoaiHang.Size = new Size(1720, 257);
             pnlLoaiHang.TabIndex = 0;
             // 
             // lblTitleLoai
@@ -344,7 +367,8 @@ namespace QuanLyKhoHang.Forms
             lblTitleLoai.AutoSize = true;
             lblTitleLoai.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblTitleLoai.ForeColor = Color.FromArgb(30, 58, 138);
-            lblTitleLoai.Location = new Point(20, -9);
+            lblTitleLoai.Location = new Point(25, 9);
+            lblTitleLoai.Margin = new Padding(4, 0, 4, 0);
             lblTitleLoai.Name = "lblTitleLoai";
             lblTitleLoai.Size = new Size(321, 41);
             lblTitleLoai.TabIndex = 0;
@@ -353,7 +377,8 @@ namespace QuanLyKhoHang.Forms
             // lblTenLoai
             // 
             lblTenLoai.AutoSize = true;
-            lblTenLoai.Location = new Point(20, 57);
+            lblTenLoai.Location = new Point(25, 85);
+            lblTenLoai.Margin = new Padding(4, 0, 4, 0);
             lblTenLoai.Name = "lblTenLoai";
             lblTenLoai.Size = new Size(101, 20);
             lblTenLoai.TabIndex = 1;
@@ -361,15 +386,17 @@ namespace QuanLyKhoHang.Forms
             // 
             // txtTenLoai
             // 
-            txtTenLoai.Location = new Point(150, 52);
+            txtTenLoai.Location = new Point(188, 80);
+            txtTenLoai.Margin = new Padding(4, 4, 4, 4);
             txtTenLoai.Name = "txtTenLoai";
-            txtTenLoai.Size = new Size(360, 27);
+            txtTenLoai.Size = new Size(449, 27);
             txtTenLoai.TabIndex = 2;
             // 
             // lblGhiChuLoai
             // 
             lblGhiChuLoai.AutoSize = true;
-            lblGhiChuLoai.Location = new Point(20, 97);
+            lblGhiChuLoai.Location = new Point(25, 135);
+            lblGhiChuLoai.Margin = new Padding(4, 0, 4, 0);
             lblGhiChuLoai.Name = "lblGhiChuLoai";
             lblGhiChuLoai.Size = new Size(61, 20);
             lblGhiChuLoai.TabIndex = 3;
@@ -377,16 +404,18 @@ namespace QuanLyKhoHang.Forms
             // 
             // txtGhiChuLoai
             // 
-            txtGhiChuLoai.Location = new Point(150, 92);
+            txtGhiChuLoai.Location = new Point(188, 130);
+            txtGhiChuLoai.Margin = new Padding(4, 4, 4, 4);
             txtGhiChuLoai.Name = "txtGhiChuLoai";
-            txtGhiChuLoai.Size = new Size(360, 27);
+            txtGhiChuLoai.Size = new Size(449, 27);
             txtGhiChuLoai.TabIndex = 4;
             // 
             // btnThemLoai
             // 
-            btnThemLoai.Location = new Point(150, 142);
+            btnThemLoai.Location = new Point(188, 198);
+            btnThemLoai.Margin = new Padding(4, 4, 4, 4);
             btnThemLoai.Name = "btnThemLoai";
-            btnThemLoai.Size = new Size(95, 35);
+            btnThemLoai.Size = new Size(119, 44);
             btnThemLoai.TabIndex = 5;
             btnThemLoai.Text = "Thêm";
             btnThemLoai.UseVisualStyleBackColor = false;
@@ -394,9 +423,10 @@ namespace QuanLyKhoHang.Forms
             // 
             // btnSuaLoai
             // 
-            btnSuaLoai.Location = new Point(260, 142);
+            btnSuaLoai.Location = new Point(325, 198);
+            btnSuaLoai.Margin = new Padding(4, 4, 4, 4);
             btnSuaLoai.Name = "btnSuaLoai";
-            btnSuaLoai.Size = new Size(95, 35);
+            btnSuaLoai.Size = new Size(119, 44);
             btnSuaLoai.TabIndex = 6;
             btnSuaLoai.Text = "Sửa";
             btnSuaLoai.UseVisualStyleBackColor = false;
@@ -404,9 +434,10 @@ namespace QuanLyKhoHang.Forms
             // 
             // btnXoaLoai
             // 
-            btnXoaLoai.Location = new Point(370, 142);
+            btnXoaLoai.Location = new Point(462, 198);
+            btnXoaLoai.Margin = new Padding(4, 4, 4, 4);
             btnXoaLoai.Name = "btnXoaLoai";
-            btnXoaLoai.Size = new Size(95, 35);
+            btnXoaLoai.Size = new Size(119, 44);
             btnXoaLoai.TabIndex = 7;
             btnXoaLoai.Text = "Xóa";
             btnXoaLoai.UseVisualStyleBackColor = false;
@@ -414,9 +445,10 @@ namespace QuanLyKhoHang.Forms
             // 
             // btnLamMoiLoai
             // 
-            btnLamMoiLoai.Location = new Point(480, 142);
+            btnLamMoiLoai.Location = new Point(600, 198);
+            btnLamMoiLoai.Margin = new Padding(4, 4, 4, 4);
             btnLamMoiLoai.Name = "btnLamMoiLoai";
-            btnLamMoiLoai.Size = new Size(95, 35);
+            btnLamMoiLoai.Size = new Size(119, 44);
             btnLamMoiLoai.TabIndex = 8;
             btnLamMoiLoai.Text = "Làm mới";
             btnLamMoiLoai.UseVisualStyleBackColor = false;
@@ -424,17 +456,19 @@ namespace QuanLyKhoHang.Forms
             // 
             // txtTimKiemLoai
             // 
-            txtTimKiemLoai.Location = new Point(600, 144);
+            txtTimKiemLoai.Location = new Point(750, 200);
+            txtTimKiemLoai.Margin = new Padding(4, 4, 4, 4);
             txtTimKiemLoai.Name = "txtTimKiemLoai";
-            txtTimKiemLoai.Size = new Size(180, 27);
+            txtTimKiemLoai.Size = new Size(224, 27);
             txtTimKiemLoai.TabIndex = 9;
             // 
             // FrmDanhMuc
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1000, 600);
+            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(1748, 750);
             Controls.Add(tabDanhMuc);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "FrmDanhMuc";
             StartPosition = FormStartPosition.Manual;
             Text = "Quản lý Danh mục";

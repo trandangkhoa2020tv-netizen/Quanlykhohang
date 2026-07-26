@@ -1,13 +1,13 @@
 namespace QuanLyKhoHang.Forms
 {
-    partial class FrmXuatKho
+    partial class FrmNhapKho
     {
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.GroupBox groupPhieu;
         private System.Windows.Forms.GroupBox groupHang;
-        private System.Windows.Forms.ComboBox cbKhachHang;
+        private System.Windows.Forms.ComboBox cbNCC;
         private System.Windows.Forms.ComboBox cbNhanVien;
         private System.Windows.Forms.ComboBox cbHangHoa;
         private System.Windows.Forms.TextBox txtSoLuong;
@@ -21,7 +21,7 @@ namespace QuanLyKhoHang.Forms
         private System.Windows.Forms.Button btnExcel;
         private System.Windows.Forms.Button btnPdf;
         private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Label lblKhachHang;
+        private System.Windows.Forms.Label lblNhaCungCap;
         private System.Windows.Forms.Label lblNhanVien;
         private System.Windows.Forms.Label lblGhiChuPhieu;
         private System.Windows.Forms.Label lblHangHoa;
@@ -43,7 +43,7 @@ namespace QuanLyKhoHang.Forms
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.groupPhieu = new System.Windows.Forms.GroupBox();
             this.groupHang = new System.Windows.Forms.GroupBox();
-            this.cbKhachHang = new System.Windows.Forms.ComboBox();
+            this.cbNCC = new System.Windows.Forms.ComboBox();
             this.cbNhanVien = new System.Windows.Forms.ComboBox();
             this.cbHangHoa = new System.Windows.Forms.ComboBox();
             this.txtSoLuong = new System.Windows.Forms.TextBox();
@@ -57,7 +57,7 @@ namespace QuanLyKhoHang.Forms
             this.btnExcel = new System.Windows.Forms.Button();
             this.btnPdf = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.lblKhachHang = new System.Windows.Forms.Label();
+            this.lblNhaCungCap = new System.Windows.Forms.Label();
             this.lblNhanVien = new System.Windows.Forms.Label();
             this.lblGhiChuPhieu = new System.Windows.Forms.Label();
             this.lblHangHoa = new System.Windows.Forms.Label();
@@ -75,38 +75,38 @@ namespace QuanLyKhoHang.Forms
             this.SuspendLayout();
 
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTop.Height = 300;
+            this.pnlTop.Height = 330;
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pnlTop.Controls.AddRange(new System.Windows.Forms.Control[] {
                 this.lblTitle, this.groupPhieu, this.groupHang, this.lblTimKiem, this.txtTimKiem
             });
 
-            this.lblTitle.Text = "LẬP PHIẾU XUẤT KHO (BÁN HÀNG)";
+            this.lblTitle.Text = "LẬP PHIẾU NHẬP KHO";
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lblTitle.Location = new System.Drawing.Point(20, 12);
             this.lblTitle.AutoSize = true;
-            this.lblTitle.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(30, 58, 138);
 
-            this.groupPhieu.Text = "Thông tin hóa đơn";
-            this.groupPhieu.Location = new System.Drawing.Point(20, 52);
+            this.groupPhieu.Text = "Thông tin chung";
+            this.groupPhieu.Location = new System.Drawing.Point(20, 68);
             this.groupPhieu.Size = new System.Drawing.Size(940, 112);
             this.groupPhieu.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.groupPhieu.Controls.AddRange(new System.Windows.Forms.Control[] {
-                this.lblKhachHang, this.cbKhachHang, this.lblNhanVien, this.cbNhanVien,
+                this.lblNhaCungCap, this.cbNCC, this.lblNhanVien, this.cbNhanVien,
                 this.lblGhiChuPhieu, this.txtGhiChuPhieu
             });
 
-            this.lblKhachHang.Text = "Khách hàng:";
-            this.lblKhachHang.Location = new System.Drawing.Point(15, 28);
-            this.lblKhachHang.AutoSize = true;
+            this.lblNhaCungCap.Text = "Nhà cung cấp:";
+            this.lblNhaCungCap.Location = new System.Drawing.Point(15, 28);
+            this.lblNhaCungCap.AutoSize = true;
 
-            this.cbKhachHang.Location = new System.Drawing.Point(135, 30);
-            this.cbKhachHang.Size = new System.Drawing.Size(280, 27);
-            this.cbKhachHang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbNCC.Location = new System.Drawing.Point(135, 30);
+            this.cbNCC.Size = new System.Drawing.Size(280, 27);
+            this.cbNCC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 
-            this.lblNhanVien.Text = "Nhân viên xuất:";
+            this.lblNhanVien.Text = "Nhân viên lập:";
             this.lblNhanVien.Location = new System.Drawing.Point(455, 28);
             this.lblNhanVien.AutoSize = true;
 
@@ -121,8 +121,8 @@ namespace QuanLyKhoHang.Forms
             this.txtGhiChuPhieu.Location = new System.Drawing.Point(135, 70);
             this.txtGhiChuPhieu.Size = new System.Drawing.Size(755, 27);
 
-            this.groupHang.Text = "Chọn hàng xuất kho";
-            this.groupHang.Location = new System.Drawing.Point(20, 174);
+            this.groupHang.Text = "Chi tiết mặt hàng";
+            this.groupHang.Location = new System.Drawing.Point(20, 190);
             this.groupHang.Size = new System.Drawing.Size(940, 82);
             this.groupHang.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.groupHang.Controls.AddRange(new System.Windows.Forms.Control[] {
@@ -146,8 +146,8 @@ namespace QuanLyKhoHang.Forms
             this.txtSoLuong.Name = "txtSoLuong";
             this.txtSoLuong.Size = new System.Drawing.Size(90, 27);
 
-            this.lblDonGia.Text = "Đơn giá xuất:";
-            this.lblDonGia.Location = new System.Drawing.Point(575, 33);
+            this.lblDonGia.Text = "Đơn giá nhập:";
+            this.lblDonGia.Location = new System.Drawing.Point(573, 33);
             this.lblDonGia.AutoSize = true;
 
             this.txtDonGia.Location = new System.Drawing.Point(690, 35);
@@ -168,21 +168,21 @@ namespace QuanLyKhoHang.Forms
             this.lblTimKiem.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblTimKiem.ForeColor = System.Drawing.Color.DarkBlue;
             this.lblTimKiem.AutoSize = true;
-            this.lblTimKiem.Location = new System.Drawing.Point(500, 15);
+            this.lblTimKiem.Location = new System.Drawing.Point(500, 286);
             this.lblTimKiem.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
 
             this.txtTimKiem.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Location = new System.Drawing.Point(500, 12);
+            this.txtTimKiem.Location = new System.Drawing.Point(500, 282);
             this.txtTimKiem.Size = new System.Drawing.Size(175, 30);
             this.txtTimKiem.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.txtTimKiem.TextChanged += new System.EventHandler(this.txtTimKiem_TextChanged);
 
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Height = 72;
+            this.pnlBottom.Height = 64;
             this.pnlBottom.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pnlBottom.Padding = new System.Windows.Forms.Padding(20, 14, 20, 14);
+            this.pnlBottom.Padding = new System.Windows.Forms.Padding(16, 10, 16, 10);
             this.pnlBottom.Controls.AddRange(new System.Windows.Forms.Control[] {
                 this.lblTongTien, this.btnLuuPhieu, this.btnExcel, this.btnPdf
             });
@@ -196,9 +196,9 @@ namespace QuanLyKhoHang.Forms
             this.lblTongTien.AutoSize = false;
             this.lblTongTien.Width = 360;
 
-            this.btnLuuPhieu.Text = "LƯU PHIẾU XUẤT KHO";
+            this.btnLuuPhieu.Text = "Lưu phiếu nhập";
             this.btnLuuPhieu.Name = "btnLuuPhieu";
-            this.btnLuuPhieu.Width = 190;
+            this.btnLuuPhieu.Width = 164;
             this.btnLuuPhieu.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.btnLuuPhieu.ForeColor = System.Drawing.Color.White;
             this.btnLuuPhieu.Dock = System.Windows.Forms.DockStyle.Right;
@@ -206,7 +206,7 @@ namespace QuanLyKhoHang.Forms
 
             this.btnExcel.Text = "Xuất Excel";
             this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Width = 120;
+            this.btnExcel.Width = 112;
             this.btnExcel.BackColor = System.Drawing.Color.SteelBlue;
             this.btnExcel.ForeColor = System.Drawing.Color.White;
             this.btnExcel.Dock = System.Windows.Forms.DockStyle.Right;
@@ -214,7 +214,7 @@ namespace QuanLyKhoHang.Forms
 
             this.btnPdf.Text = "Xuất PDF";
             this.btnPdf.Name = "btnPdf";
-            this.btnPdf.Width = 120;
+            this.btnPdf.Width = 104;
             this.btnPdf.BackColor = System.Drawing.Color.IndianRed;
             this.btnPdf.ForeColor = System.Drawing.Color.White;
             this.btnPdf.Dock = System.Windows.Forms.DockStyle.Right;
@@ -227,7 +227,7 @@ namespace QuanLyKhoHang.Forms
             this.dgvChiTiet.AllowUserToAddRows = false;
             this.dgvChiTiet.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvChiTiet_DataBindingComplete);
 
-            this.lblLichSuTitle.Text = "  Lịch sử phiếu xuất đã lưu (click chọn dòng để xuất file)";
+            this.lblLichSuTitle.Text = "  Lịch sử phiếu nhập đã lưu (click chọn dòng để xuất file)";
             this.lblLichSuTitle.Name = "lblLichSuTitle";
             this.lblLichSuTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblLichSuTitle.BackColor = System.Drawing.Color.FromArgb(239, 246, 255);
@@ -245,17 +245,17 @@ namespace QuanLyKhoHang.Forms
             this.dgvLichSuPhieu.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLichSuPhieu_CellClick);
             this.dgvLichSuPhieu.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvLichSuPhieu_DataBindingComplete);
 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(980, 680);
             this.Controls.Add(this.dgvLichSuPhieu);
             this.Controls.Add(this.lblLichSuTitle);
             this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.dgvChiTiet);
             this.Controls.Add(this.pnlTop);
-            this.Name = "FrmXuatKho";
-            this.Text = "Lập Phiếu Xuất Kho";
-            this.Load += new System.EventHandler(this.FrmXuatKho_Load);
+            this.Name = "FrmNhapKho";
+            this.Text = "Lập Phiếu Nhập Kho";
+            this.Load += new System.EventHandler(this.FrmNhapKho_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvChiTiet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLichSuPhieu)).EndInit();
             this.groupHang.ResumeLayout(false);

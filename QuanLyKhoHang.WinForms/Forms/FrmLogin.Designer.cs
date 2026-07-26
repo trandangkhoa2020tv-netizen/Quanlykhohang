@@ -69,7 +69,7 @@
             // ======================================================================
             // lblTitle (ĐÃ SỬA: Đổi sang màu xanh công nghệ đồng bộ với Dashboard)
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(37, 99, 235);
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(30, 58, 138);
             this.lblTitle.Location = new System.Drawing.Point(40, 72);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(290, 40);
@@ -157,8 +157,8 @@
             // ======================================================================
             // FrmDangNhap tổng quát (ĐÃ SỬA: Nền form màu trắng sáng sạch sẽ chuẩn SaaS)
             this.AcceptButton = this.btnLogin; 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
             this.ClientSize = new System.Drawing.Size(440, 396);
             this.Controls.Add(this.pnlCard);

@@ -85,18 +85,21 @@ namespace QuanLyKhoHang.Forms
             pnlShell.Controls.Add(pnlSidebar);
             pnlShell.Dock = DockStyle.Fill;
             pnlShell.Location = new Point(0, 0);
+            pnlShell.Margin = new Padding(4);
             pnlShell.Name = "pnlShell";
-            pnlShell.Size = new Size(1200, 700);
+            pnlShell.Size = new Size(1500, 875);
             pnlShell.TabIndex = 1;
             // 
             // pnlContent
             // 
             pnlContent.BackColor = Color.FromArgb(240, 242, 245);
             pnlContent.Dock = DockStyle.Fill;
-            pnlContent.Location = new Point(260, 60);
+            pnlContent.Location = new Point(325, 75);
+            pnlContent.Margin = new Padding(4);
             pnlContent.Name = "pnlContent";
-            pnlContent.Size = new Size(940, 640);
+            pnlContent.Size = new Size(1175, 800);
             pnlContent.TabIndex = 0;
+            pnlContent.Paint += pnlContent_Paint;
             // 
             // pnlHeader
             // 
@@ -104,9 +107,10 @@ namespace QuanLyKhoHang.Forms
             pnlHeader.Controls.Add(btnUserMenu);
             pnlHeader.Controls.Add(pnlHeaderLine);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(260, 0);
+            pnlHeader.Location = new Point(325, 0);
+            pnlHeader.Margin = new Padding(4);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(940, 60);
+            pnlHeader.Size = new Size(1175, 75);
             pnlHeader.TabIndex = 1;
             // 
             // btnUserMenu
@@ -116,11 +120,12 @@ namespace QuanLyKhoHang.Forms
             btnUserMenu.Cursor = Cursors.Hand;
             btnUserMenu.FlatAppearance.BorderColor = Color.FromArgb(224, 229, 238);
             btnUserMenu.FlatStyle = FlatStyle.Flat;
-            btnUserMenu.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnUserMenu.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnUserMenu.ForeColor = Color.FromArgb(30, 41, 59);
-            btnUserMenu.Location = new Point(792, 10);
+            btnUserMenu.Location = new Point(1025, 16);
+            btnUserMenu.Margin = new Padding(4);
             btnUserMenu.Name = "btnUserMenu";
-            btnUserMenu.Size = new Size(133, 44);
+            btnUserMenu.Size = new Size(130, 42);
             btnUserMenu.TabIndex = 0;
             btnUserMenu.Text = "Admin";
             btnUserMenu.UseVisualStyleBackColor = false;
@@ -130,9 +135,10 @@ namespace QuanLyKhoHang.Forms
             // 
             pnlHeaderLine.BackColor = Color.FromArgb(224, 229, 238);
             pnlHeaderLine.Dock = DockStyle.Bottom;
-            pnlHeaderLine.Location = new Point(0, 59);
+            pnlHeaderLine.Location = new Point(0, 74);
+            pnlHeaderLine.Margin = new Padding(4);
             pnlHeaderLine.Name = "pnlHeaderLine";
-            pnlHeaderLine.Size = new Size(940, 1);
+            pnlHeaderLine.Size = new Size(1175, 1);
             pnlHeaderLine.TabIndex = 1;
             // 
             // pnlSidebar
@@ -144,8 +150,9 @@ namespace QuanLyKhoHang.Forms
             pnlSidebar.Controls.Add(pnlSidebarLine);
             pnlSidebar.Dock = DockStyle.Left;
             pnlSidebar.Location = new Point(0, 0);
+            pnlSidebar.Margin = new Padding(4);
             pnlSidebar.Name = "pnlSidebar";
-            pnlSidebar.Size = new Size(260, 700);
+            pnlSidebar.Size = new Size(325, 875);
             pnlSidebar.TabIndex = 2;
             // 
             // flowLayoutPanel1
@@ -160,10 +167,11 @@ namespace QuanLyKhoHang.Forms
             flowLayoutPanel1.Controls.Add(btnThongKe);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanel1.Location = new Point(0, 120);
+            flowLayoutPanel1.Location = new Point(0, 150);
+            flowLayoutPanel1.Margin = new Padding(4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Padding = new Padding(20, 8, 20, 8);
-            flowLayoutPanel1.Size = new Size(259, 470);
+            flowLayoutPanel1.Padding = new Padding(25, 10, 25, 10);
+            flowLayoutPanel1.Size = new Size(324, 587);
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.WrapContents = false;
             // 
@@ -175,11 +183,11 @@ namespace QuanLyKhoHang.Forms
             btnHangHoa.FlatStyle = FlatStyle.Flat;
             btnHangHoa.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnHangHoa.ForeColor = Color.White;
-            btnHangHoa.Location = new Point(20, 8);
-            btnHangHoa.Margin = new Padding(0, 0, 0, 10);
+            btnHangHoa.Location = new Point(25, 10);
+            btnHangHoa.Margin = new Padding(0, 0, 0, 12);
             btnHangHoa.Name = "btnHangHoa";
-            btnHangHoa.Padding = new Padding(22, 0, 0, 0);
-            btnHangHoa.Size = new Size(220, 44);
+            btnHangHoa.Padding = new Padding(28, 0, 0, 0);
+            btnHangHoa.Size = new Size(275, 55);
             btnHangHoa.TabIndex = 0;
             btnHangHoa.Text = "Hàng Hóa";
             btnHangHoa.TextAlign = ContentAlignment.MiddleLeft;
@@ -194,11 +202,11 @@ namespace QuanLyKhoHang.Forms
             btnKhachHang.FlatStyle = FlatStyle.Flat;
             btnKhachHang.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnKhachHang.ForeColor = Color.FromArgb(43, 54, 73);
-            btnKhachHang.Location = new Point(20, 62);
-            btnKhachHang.Margin = new Padding(0, 0, 0, 10);
+            btnKhachHang.Location = new Point(25, 77);
+            btnKhachHang.Margin = new Padding(0, 0, 0, 12);
             btnKhachHang.Name = "btnKhachHang";
-            btnKhachHang.Padding = new Padding(22, 0, 0, 0);
-            btnKhachHang.Size = new Size(220, 44);
+            btnKhachHang.Padding = new Padding(28, 0, 0, 0);
+            btnKhachHang.Size = new Size(275, 55);
             btnKhachHang.TabIndex = 1;
             btnKhachHang.Text = "Khách Hàng";
             btnKhachHang.TextAlign = ContentAlignment.MiddleLeft;
@@ -213,11 +221,11 @@ namespace QuanLyKhoHang.Forms
             btnNhanVien.FlatStyle = FlatStyle.Flat;
             btnNhanVien.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnNhanVien.ForeColor = Color.FromArgb(43, 54, 73);
-            btnNhanVien.Location = new Point(20, 116);
-            btnNhanVien.Margin = new Padding(0, 0, 0, 10);
+            btnNhanVien.Location = new Point(25, 144);
+            btnNhanVien.Margin = new Padding(0, 0, 0, 12);
             btnNhanVien.Name = "btnNhanVien";
-            btnNhanVien.Padding = new Padding(22, 0, 0, 0);
-            btnNhanVien.Size = new Size(220, 44);
+            btnNhanVien.Padding = new Padding(28, 0, 0, 0);
+            btnNhanVien.Size = new Size(275, 55);
             btnNhanVien.TabIndex = 2;
             btnNhanVien.Text = "Nhân Viên";
             btnNhanVien.TextAlign = ContentAlignment.MiddleLeft;
@@ -232,11 +240,11 @@ namespace QuanLyKhoHang.Forms
             btnNhapKho.FlatStyle = FlatStyle.Flat;
             btnNhapKho.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnNhapKho.ForeColor = Color.FromArgb(43, 54, 73);
-            btnNhapKho.Location = new Point(20, 170);
-            btnNhapKho.Margin = new Padding(0, 0, 0, 10);
+            btnNhapKho.Location = new Point(25, 211);
+            btnNhapKho.Margin = new Padding(0, 0, 0, 12);
             btnNhapKho.Name = "btnNhapKho";
-            btnNhapKho.Padding = new Padding(22, 0, 0, 0);
-            btnNhapKho.Size = new Size(220, 44);
+            btnNhapKho.Padding = new Padding(28, 0, 0, 0);
+            btnNhapKho.Size = new Size(275, 55);
             btnNhapKho.TabIndex = 3;
             btnNhapKho.Text = "Nhập Kho";
             btnNhapKho.TextAlign = ContentAlignment.MiddleLeft;
@@ -251,49 +259,49 @@ namespace QuanLyKhoHang.Forms
             btnXuatKho.FlatStyle = FlatStyle.Flat;
             btnXuatKho.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnXuatKho.ForeColor = Color.FromArgb(43, 54, 73);
-            btnXuatKho.Location = new Point(20, 224);
-            btnXuatKho.Margin = new Padding(0, 0, 0, 10);
+            btnXuatKho.Location = new Point(25, 278);
+            btnXuatKho.Margin = new Padding(0, 0, 0, 12);
             btnXuatKho.Name = "btnXuatKho";
-            btnXuatKho.Padding = new Padding(22, 0, 0, 0);
-            btnXuatKho.Size = new Size(220, 44);
+            btnXuatKho.Padding = new Padding(28, 0, 0, 0);
+            btnXuatKho.Size = new Size(275, 55);
             btnXuatKho.TabIndex = 4;
             btnXuatKho.Text = "Xuất Kho";
             btnXuatKho.TextAlign = ContentAlignment.MiddleLeft;
             btnXuatKho.UseVisualStyleBackColor = false;
             btnXuatKho.Click += btnXuatKho_Click;
-            //
+            // 
             // btnDanhMuc
-            //
+            // 
             btnDanhMuc.BackColor = Color.White;
             btnDanhMuc.Cursor = Cursors.Hand;
             btnDanhMuc.FlatAppearance.BorderSize = 0;
             btnDanhMuc.FlatStyle = FlatStyle.Flat;
             btnDanhMuc.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnDanhMuc.ForeColor = Color.FromArgb(43, 54, 73);
-            btnDanhMuc.Location = new Point(20, 278);
-            btnDanhMuc.Margin = new Padding(0, 0, 0, 10);
+            btnDanhMuc.Location = new Point(25, 345);
+            btnDanhMuc.Margin = new Padding(0, 0, 0, 12);
             btnDanhMuc.Name = "btnDanhMuc";
-            btnDanhMuc.Padding = new Padding(22, 0, 0, 0);
-            btnDanhMuc.Size = new Size(220, 44);
+            btnDanhMuc.Padding = new Padding(28, 0, 0, 0);
+            btnDanhMuc.Size = new Size(275, 55);
             btnDanhMuc.TabIndex = 5;
             btnDanhMuc.Text = "Danh Mục";
             btnDanhMuc.TextAlign = ContentAlignment.MiddleLeft;
             btnDanhMuc.UseVisualStyleBackColor = false;
             btnDanhMuc.Click += btnDanhMuc_Click;
-            //
+            // 
             // btnThongKe
-            //
+            // 
             btnThongKe.BackColor = Color.White;
             btnThongKe.Cursor = Cursors.Hand;
             btnThongKe.FlatAppearance.BorderSize = 0;
             btnThongKe.FlatStyle = FlatStyle.Flat;
             btnThongKe.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnThongKe.ForeColor = Color.FromArgb(43, 54, 73);
-            btnThongKe.Location = new Point(20, 332);
-            btnThongKe.Margin = new Padding(0, 0, 0, 10);
+            btnThongKe.Location = new Point(25, 412);
+            btnThongKe.Margin = new Padding(0, 0, 0, 12);
             btnThongKe.Name = "btnThongKe";
-            btnThongKe.Padding = new Padding(22, 0, 0, 0);
-            btnThongKe.Size = new Size(220, 44);
+            btnThongKe.Padding = new Padding(28, 0, 0, 0);
+            btnThongKe.Size = new Size(275, 55);
             btnThongKe.TabIndex = 6;
             btnThongKe.Text = "Thống Kê";
             btnThongKe.TextAlign = ContentAlignment.MiddleLeft;
@@ -305,9 +313,10 @@ namespace QuanLyKhoHang.Forms
             pnlSidebarFooter.BackColor = Color.White;
             pnlSidebarFooter.Controls.Add(lblVersion);
             pnlSidebarFooter.Dock = DockStyle.Bottom;
-            pnlSidebarFooter.Location = new Point(0, 590);
+            pnlSidebarFooter.Location = new Point(0, 737);
+            pnlSidebarFooter.Margin = new Padding(4);
             pnlSidebarFooter.Name = "pnlSidebarFooter";
-            pnlSidebarFooter.Size = new Size(259, 110);
+            pnlSidebarFooter.Size = new Size(324, 138);
             pnlSidebarFooter.TabIndex = 1;
             // 
             // lblVersion
@@ -316,9 +325,10 @@ namespace QuanLyKhoHang.Forms
             lblVersion.BorderStyle = BorderStyle.FixedSingle;
             lblVersion.Font = new Font("Segoe UI", 8.5F);
             lblVersion.ForeColor = Color.FromArgb(105, 116, 135);
-            lblVersion.Location = new Point(50, 36);
+            lblVersion.Location = new Point(45, 45);
+            lblVersion.Margin = new Padding(4, 0, 4, 0);
             lblVersion.Name = "lblVersion";
-            lblVersion.Size = new Size(155, 45);
+            lblVersion.Size = new Size(193, 56);
             lblVersion.TabIndex = 0;
             lblVersion.Text = "Phiên bản 1.0\r\n© 2026 Quản Lý Kho Hàng";
             lblVersion.TextAlign = ContentAlignment.MiddleCenter;
@@ -332,8 +342,9 @@ namespace QuanLyKhoHang.Forms
             pnlBrand.Controls.Add(btnToggleMenu);
             pnlBrand.Dock = DockStyle.Top;
             pnlBrand.Location = new Point(0, 0);
+            pnlBrand.Margin = new Padding(4);
             pnlBrand.Name = "pnlBrand";
-            pnlBrand.Size = new Size(259, 120);
+            pnlBrand.Size = new Size(324, 150);
             pnlBrand.TabIndex = 2;
             // 
             // lblBrandIcon
@@ -341,9 +352,10 @@ namespace QuanLyKhoHang.Forms
             lblBrandIcon.BackColor = Color.FromArgb(30, 112, 235);
             lblBrandIcon.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             lblBrandIcon.ForeColor = Color.White;
-            lblBrandIcon.Location = new Point(24, 12);
+            lblBrandIcon.Location = new Point(30, 15);
+            lblBrandIcon.Margin = new Padding(4, 0, 4, 0);
             lblBrandIcon.Name = "lblBrandIcon";
-            lblBrandIcon.Size = new Size(48, 48);
+            lblBrandIcon.Size = new Size(60, 60);
             lblBrandIcon.TabIndex = 0;
             lblBrandIcon.Text = "QL";
             lblBrandIcon.TextAlign = ContentAlignment.MiddleCenter;
@@ -352,9 +364,10 @@ namespace QuanLyKhoHang.Forms
             // 
             lblBrandText.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblBrandText.ForeColor = Color.FromArgb(30, 112, 235);
-            lblBrandText.Location = new Point(84, 16);
+            lblBrandText.Location = new Point(105, 20);
+            lblBrandText.Margin = new Padding(4, 0, 4, 0);
             lblBrandText.Name = "lblBrandText";
-            lblBrandText.Size = new Size(160, 62);
+            lblBrandText.Size = new Size(200, 78);
             lblBrandText.TabIndex = 1;
             lblBrandText.Text = "Quản Lý\r\nKho Hàng";
             lblBrandText.TextAlign = ContentAlignment.MiddleLeft;
@@ -366,17 +379,16 @@ namespace QuanLyKhoHang.Forms
             btnToggleMenu.BackColor = Color.FromArgb(239, 246, 255);
             btnToggleMenu.Cursor = Cursors.Hand;
             btnToggleMenu.FlatAppearance.BorderColor = Color.FromArgb(30, 112, 235);
-            btnToggleMenu.FlatAppearance.BorderSize = 1;
             btnToggleMenu.FlatAppearance.MouseDownBackColor = Color.FromArgb(219, 234, 254);
             btnToggleMenu.FlatAppearance.MouseOverBackColor = Color.FromArgb(239, 246, 255);
             btnToggleMenu.FlatStyle = FlatStyle.Flat;
             btnToggleMenu.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnToggleMenu.ForeColor = Color.FromArgb(30, 112, 235);
-            btnToggleMenu.Location = new Point(19, 74);
+            btnToggleMenu.Location = new Point(24, 92);
+            btnToggleMenu.Margin = new Padding(4);
             btnToggleMenu.Name = "btnToggleMenu";
-            btnToggleMenu.Size = new Size(40, 40);
+            btnToggleMenu.Size = new Size(50, 50);
             btnToggleMenu.TabIndex = 2;
-            btnToggleMenu.Text = string.Empty;
             btnToggleMenu.UseVisualStyleBackColor = false;
             btnToggleMenu.Click += btnToggleMenu_Click;
             // 
@@ -384,35 +396,41 @@ namespace QuanLyKhoHang.Forms
             // 
             pnlSidebarLine.BackColor = Color.FromArgb(224, 229, 238);
             pnlSidebarLine.Dock = DockStyle.Right;
-            pnlSidebarLine.Location = new Point(259, 0);
+            pnlSidebarLine.Location = new Point(324, 0);
+            pnlSidebarLine.Margin = new Padding(4);
             pnlSidebarLine.Name = "pnlSidebarLine";
-            pnlSidebarLine.Size = new Size(1, 700);
+            pnlSidebarLine.Size = new Size(1, 875);
             pnlSidebarLine.TabIndex = 3;
             // 
             // cmsUser
             // 
-            cmsUser.ImageScalingSize = new Size(20, 20);
+            cmsUser.BackColor = Color.White;
+            cmsUser.Font = new Font("Segoe UI", 9F);
+            cmsUser.ImageScalingSize = new Size(16, 16);
             cmsUser.Items.AddRange(new ToolStripItem[] { menuTaiKhoan, menuChucVu, menuDangXuat });
             cmsUser.Name = "cmsUser";
-            cmsUser.Size = new Size(240, 76);
+            cmsUser.Size = new Size(220, 104);
             // 
             // menuTaiKhoan
             // 
             menuTaiKhoan.Name = "menuTaiKhoan";
-            menuTaiKhoan.Size = new Size(239, 24);
+            menuTaiKhoan.Size = new Size(219, 32);
             menuTaiKhoan.Text = "Tai khoan";
             // 
             // menuChucVu
             // 
             menuChucVu.Name = "menuChucVu";
-            menuChucVu.Size = new Size(239, 24);
+            menuChucVu.Size = new Size(219, 32);
             menuChucVu.Text = "Quyen han";
             // 
             // menuDangXuat
             // 
             menuDangXuat.Name = "menuDangXuat";
-            menuDangXuat.Size = new Size(239, 24);
-            menuDangXuat.Text = "Đăng xuất / Chuyển tài khoản";
+            menuDangXuat.BackColor = Color.FromArgb(254, 242, 242);
+            menuDangXuat.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            menuDangXuat.ForeColor = Color.FromArgb(185, 28, 28);
+            menuDangXuat.Size = new Size(219, 32);
+            menuDangXuat.Text = "Đăng xuất";
             menuDangXuat.Click += menuDangXuat_Click;
             // 
             // sidebarTimer
@@ -421,10 +439,11 @@ namespace QuanLyKhoHang.Forms
             // 
             // FrmMain
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1200, 700);
+            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(1500, 875);
             Controls.Add(pnlShell);
+            Margin = new Padding(4);
             Name = "FrmMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ Thống Quản Lý Kho Hàng - Dashboard";
