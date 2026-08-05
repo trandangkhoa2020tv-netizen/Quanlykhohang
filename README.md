@@ -1,100 +1,100 @@
-# Quan Ly Kho Hang
+# Inventory Management System
 
-He thong quan ly kho hang cho desktop Windows, gom ung dung WinForms, ASP.NET Core Minimal API va PostgreSQL.
+An inventory management system for Windows desktop, consisting of a WinForms application, an ASP.NET Core Minimal API, and PostgreSQL.
 
-## Thanh phan
+## Components
 
-| Project | Muc dich |
+| Project | Purpose |
 | --- | --- |
-| `QuanLyKhoHang.WinForms` | Ung dung desktop: dang nhap, quan ly danh muc, lap phieu nhap/xuat, dashboard va xuat Excel/PDF. |
-| `QuanLyKhoHang.Api` | Backend HTTP: xac thuc JWT, phan quyen, validate, xu ly nghiep vu, audit log va PostgreSQL. |
-| `QuanLyKhoHang.Shared` | Model va DTO dung chung giua desktop va API. |
-| `QuanLyKhoHang.Tests` | xUnit test cho validation, JWT va cac middleware bao mat. |
+| `QuanLyKhoHang.WinForms` | Desktop application: sign-in, master-data management, goods receipt/issue creation, dashboard, and Excel/PDF export. |
+| `QuanLyKhoHang.Api` | HTTP backend: JWT authentication, authorization, validation, business processing, audit logging, and PostgreSQL access. |
+| `QuanLyKhoHang.Shared` | Models and DTOs shared by the desktop application and API. |
+| `QuanLyKhoHang.Tests` | xUnit tests for validation, JWT, and security middleware. |
 
-Tat ca project dang target `.NET 9`; WinForms target `net9.0-windows`.
+All projects target `.NET 9`; WinForms targets `net9.0-windows`.
 
-## Kien truc
+## Architecture
 
 ```text
 WinForms
   -> ApiClients
-  -> HTTP JSON (X-API-Key neu bat, Bearer JWT sau dang nhap)
+  -> HTTP JSON (X-API-Key when enabled; Bearer JWT after sign-in)
   -> QuanLyKhoHang.Api
   -> Services / Repositories
   -> PostgreSQL
 ```
 
-WinForms khong ket noi truc tiep den PostgreSQL. Mọi kiem tra quyen va nghiep vu quan trong deu nam o API.
+WinForms does not connect directly to PostgreSQL. All authorization checks and critical business logic reside in the API.
 
-## Yeu cau
+## Requirements
 
 - .NET SDK 9.0
-- PostgreSQL 17 hoac tuong thich
-- Visual Studio 2022 co workload **Desktop development with .NET** (neu dung IDE)
-- Docker Desktop (tuy chon, cho API va PostgreSQL container)
+- PostgreSQL 17 or compatible
+- Visual Studio 2022 with the **Desktop development with .NET** workload (if using an IDE)
+- Docker Desktop (optional, for the API and PostgreSQL containers)
 
-## Khoi dong local
+## Run locally
 
-1. Tao database PostgreSQL `quanlyhanghoa` va chay schema:
+1. Create the `quanlyhanghoa` PostgreSQL database and run the schema:
 
    ```powershell
    psql -U postgres -d quanlyhanghoa -f QuanLyKhoHang.WinForms/sql/create_tables.sql
    ```
 
-2. Dat bien moi truong cho phien PowerShell chay API:
+2. Set environment variables for the PowerShell session that runs the API:
 
    ```powershell
    $env:QLKH_DB_PASSWORD = "<database-password>"
    $env:QLKH_JWT_SECRET = "<secret-at-least-32-characters>"
    ```
 
-   `QLKH_JWT_SECRET` can dai it nhat 32 ky tu. File `.env` duoc Docker Compose va script backup su dung, nhung `dotnet run` khong tu dong nap file nay.
+   `QLKH_JWT_SECRET` must be at least 32 characters. Docker Compose and the backup script use the `.env` file, but `dotnet run` does not load it automatically.
 
-3. Khoi phuc package va build:
+3. Restore packages and build:
 
    ```powershell
    dotnet restore QuanLyKhoHang.sln
    dotnet build QuanLyKhoHang.sln
    ```
 
-4. Chay API:
+4. Run the API:
 
    ```powershell
    dotnet run --project QuanLyKhoHang.Api/QuanLyKhoHang.Api.csproj
    ```
 
-5. Chay desktop o terminal khac:
+5. Run the desktop application in another terminal:
 
    ```powershell
    dotnet run --project QuanLyKhoHang.WinForms/QuanLyKhoHang.WinForms.csproj
    ```
 
-API mac dinh nghe tai `http://localhost:8088`. Swagger chi co trong Development tai `http://localhost:8088/swagger`.
+By default, the API listens on `http://localhost:8088`. Swagger is available only in Development at `http://localhost:8088/swagger`.
 
-Schema va `sample_data.sql` khong tao tai khoan dang nhap mac dinh. Hay tao tai khoan dau tien bang quy trinh quan tri database cua don vi, voi mat khau PBKDF2 hop le; khong them mat khau plain text vao script hay tai lieu.
+The schema and `sample_data.sql` do not create a default sign-in account. Create the first account through your organization's database-administration process, using a valid PBKDF2 password hash; do not add plain-text passwords to scripts or documentation.
 
-Chi voi local development, WinForms co the tu khoi dong API khi `Config/appsettings.json` dat `AutoStartLocalApi` la `true` va `ApiBaseUrl` la `http://localhost:8088`.
+For local development only, WinForms can start the API itself when `Config/appsettings.json` sets `AutoStartLocalApi` to `true` and `ApiBaseUrl` to `http://localhost:8088`.
 
 ## Docker
 
-Docker chay API va PostgreSQL; WinForms van chay tren Windows host.
+Docker runs the API and PostgreSQL; WinForms still runs on the Windows host.
 
 ```powershell
 Copy-Item .env.example .env
-# Dat QLKH_DB_PASSWORD va QLKH_JWT_SECRET trong .env
+# Set QLKH_DB_PASSWORD and QLKH_JWT_SECRET in .env
 docker compose up -d --build
 ```
 
-| Dich vu | Dia chi tren may host |
+| Service | Host address |
 | --- | --- |
 | API | `http://localhost:8088` |
 | PostgreSQL | `localhost:5432` |
 
-Trong Docker, API ket noi PostgreSQL qua `postgres:5432`. Neu PostgreSQL local dang dung cong `5432`, hay doi port publish trong `docker-compose.yml`.
+Inside Docker, the API connects to PostgreSQL through `postgres:5432`. If local PostgreSQL already uses port `5432`, change the published port in `docker-compose.yml`.
 
-## Cau hinh va bao mat
+## Configuration and security
 
-File [`.env.example`](.env.example) liet ke cac bien mo rong:
+[`.env.example`](.env.example) lists the available environment variables:
 
 ```text
 QLKH_DB_HOST, QLKH_DB_PORT, QLKH_DB_NAME, QLKH_DB_USER, QLKH_DB_PASSWORD
@@ -104,45 +104,45 @@ QLKH_AUTO_MIGRATE
 QLKH_SEED_DEMO_DATA
 ```
 
-- `QLKH_JWT_SECRET`: bat buoc trong production, toi thieu 32 ky tu. Development khong dat bien nay se tao secret tam thoi cho phien chay.
-- `QLKH_API_KEY`: bat buoc khi `ApiSettings.RequireApiKey=true`; desktop gui key qua `X-API-Key`.
-- `QLKH_AUTO_MIGRATE=1`: chi cho Development, cho phep migration runtime.
-- `QLKH_SEED_DEMO_DATA=1`: chi co tac dung khi da bat auto migrate; khong dung cho production.
+- `QLKH_JWT_SECRET`: required in production and at least 32 characters long. In Development, if it is not set, a temporary secret is generated for the running session.
+- `QLKH_API_KEY`: required when `ApiSettings.RequireApiKey=true`; the desktop client sends it in `X-API-Key`.
+- `QLKH_AUTO_MIGRATE=1`: Development only; allows runtime migrations.
+- `QLKH_SEED_DEMO_DATA=1`: takes effect only when automatic migration is enabled; do not use in production.
 
-API gioi han request body 256 KB, yeu cau JSON cho POST/PUT/PATCH API, rate-limit login 5 lan/15 phut va co global rate limit 120 request/phut theo user/IP. Endpoint nghiep vu dung JWT; cac thao tac nhay cam con kiem tra role `Admin`.
+The API limits request bodies to 256 KB, requires JSON for POST/PUT/PATCH API calls, rate-limits sign-in to 5 attempts per 15 minutes, and applies a global limit of 120 requests per minute per user/IP. Business endpoints use JWT; sensitive operations also require the `Admin` role.
 
 ## Database
 
-SQL nam tai `QuanLyKhoHang.WinForms/sql/`:
+SQL files are in `QuanLyKhoHang.WinForms/sql/`:
 
-| File | Muc dich |
+| File | Purpose |
 | --- | --- |
-| `create_tables.sql` | Tao schema, rang buoc, index va audit log cho database moi. |
-| `sample_data.sql` | Du lieu nghiep vu mau; khong chua tai khoan/mat khau mau. |
-| `sync_existing_database.sql` | Dong bo schema database cu. |
-| `migrate_add_trang_thai.sql` | Migration trang thai tai khoan cho database cu. |
-| `backup_database.ps1` | Backup bang `pg_dump`, doc thong tin tu bien moi truong. |
+| `create_tables.sql` | Creates the schema, constraints, indexes, and audit log for a new database. |
+| `sample_data.sql` | Sample business data; does not contain sample accounts or passwords. |
+| `sync_existing_database.sql` | Synchronizes an existing database schema. |
+| `migrate_add_trang_thai.sql` | Account-status migration for existing databases. |
+| `backup_database.ps1` | Creates a backup with `pg_dump`, reading settings from environment variables. |
 
-Database production phai duoc backup truoc khi chay migration. API khong tu dong migrate hoac seed tru khi bat ro rang cac bien Development o tren.
+Back up a production database before running migrations. The API does not migrate or seed automatically unless the Development variables above are explicitly enabled.
 
-## Test
+## Tests
 
 ```powershell
 dotnet test QuanLyKhoHang.sln
 ```
 
-Test hien tai khong can PostgreSQL that. Xem [README cua project test](QuanLyKhoHang.Tests/README.md) de biet pham vi va cach chay chi tiet.
+The current tests do not require a real PostgreSQL instance. See the [test project README](QuanLyKhoHang.Tests/README.md) for coverage and detailed instructions.
 
-## Cau truc nhanh
+## Quick structure
 
 ```text
 QuanLyKhoHang.sln
-QuanLyKhoHang.Api/        Backend Minimal API
-QuanLyKhoHang.WinForms/   Desktop WinForms
-QuanLyKhoHang.Shared/     Model dung chung
+QuanLyKhoHang.Api/        Minimal API backend
+QuanLyKhoHang.WinForms/   WinForms desktop application
+QuanLyKhoHang.Shared/     Shared models
 QuanLyKhoHang.Tests/      xUnit tests
-docker-compose.yml        API + PostgreSQL cho local Docker
-.env.example              Mau bien moi truong, khong chua secret
+docker-compose.yml        API + PostgreSQL for local Docker
+.env.example              Environment-variable template without secrets
 ```
 
-Tai lieu chi tiet nam o README cua tung project.
+Detailed documentation is available in each project's README.

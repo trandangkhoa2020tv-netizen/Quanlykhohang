@@ -1,54 +1,54 @@
 # QuanLyKhoHang.WinForms
 
-Ung dung desktop Windows cua he thong Quan Ly Kho Hang. Project target `net9.0-windows` va dung WinForms. Ung dung chi hien thi giao dien va goi backend; khong truy cap PostgreSQL truc tiep.
+The Windows desktop application for the Inventory Management System. The project targets `net9.0-windows` and uses WinForms. It only renders the UI and calls the backend; it does not access PostgreSQL directly.
 
-## Chuc nang
+## Features
 
-- Dang nhap va luu phien trong bo nho.
-- Quan ly hang hoa, khach hang, nhan vien va danh muc.
-- Lap phieu nhap kho, phieu xuat kho va xem lich su.
-- Dashboard tong quan.
-- Xuat phieu ra Excel/PDF.
-- Phan quyen UI theo role API tra ve.
+- Sign-in and in-memory session storage.
+- Management of products, customers, employees, and catalogs.
+- Creation of goods receipts and goods issues, with history viewing.
+- Overview dashboard.
+- Receipt export to Excel/PDF.
+- UI authorization based on the role returned by the API.
 
-## Cau truc
+## Structure
 
 ```text
-ApiClients/  HTTP client, cau hinh backend va local API launcher
-Config/      Cau hinh desktop
-Controls/    Custom controls, bao gom chart dashboard
-Forms/       Form va giao dien Designer
-Reports/     Xuat Excel/PDF
-sql/         Schema, migration, sample data va backup script
-Program.cs   Diem khoi dong ung dung
+ApiClients/  HTTP clients, backend configuration, and local API launcher
+Config/      Desktop configuration
+Controls/    Custom controls, including dashboard charts
+Forms/       Forms and Designer UI
+Reports/     Excel/PDF export
+sql/         Schema, migrations, sample data, and backup script
+Program.cs   Application entry point
 ```
 
 ## Forms
 
-| File | Man hinh |
+| File | Screen |
 | --- | --- |
-| `FrmLogin` | Dang nhap, nhan JWT tu API. |
-| `FrmMain` | Shell chinh, sidebar, menu tai khoan va dieu huong. |
-| `FrmProduct` | Quan ly hang hoa. |
-| `FrmCustomer` | Quan ly khach hang. |
-| `FrmEmployee` | Quan ly nhan vien. |
-| `FrmCatalog` | Danh muc loai hang va nha cung cap. |
-| `FrmGoodsReceipt` | Lap va xuat phieu nhap. |
-| `FrmGoodsIssue` | Lap va xuat phieu xuat. |
-| `FrmDashboard` | Thong ke tong quan. |
-| `UiTheme` | Theme va bo cuc dung chung. |
+| `FrmLogin` | Sign-in and JWT receipt from the API. |
+| `FrmMain` | Main shell, sidebar, account menu, and navigation. |
+| `FrmProduct` | Product management. |
+| `FrmCustomer` | Customer management. |
+| `FrmEmployee` | Employee management. |
+| `FrmCatalog` | Product-category and supplier catalog. |
+| `FrmGoodsReceipt` | Create and export goods receipts. |
+| `FrmGoodsIssue` | Create and export goods issues. |
+| `FrmDashboard` | Overview statistics. |
+| `UiTheme` | Shared theme and layout. |
 
-Ten class cu co the van giu de tranh thay doi contract cua Designer; ten file da dung tieng Anh.
+Older class names may be retained to avoid changing Designer contracts; file names use English.
 
-## Cau hinh backend
+## Backend configuration
 
-Sao chep file mau:
+Copy the template file:
 
 ```powershell
 Copy-Item Config/appsettings.example.json Config/appsettings.json
 ```
 
-Vi du:
+Example:
 
 ```json
 {
@@ -57,35 +57,35 @@ Vi du:
 }
 ```
 
-| Key | Y nghia |
+| Key | Meaning |
 | --- | --- |
-| `ApiBaseUrl` | Dia chi API. Docker/local mac dinh: `http://localhost:8088`. |
-| `AutoStartLocalApi` | `true` chi cho development local; desktop se thu tu khoi dong API neu API chua san sang. |
+| `ApiBaseUrl` | API address. The Docker/local default is `http://localhost:8088`. |
+| `AutoStartLocalApi` | `true` for local development only; the desktop application attempts to start the API when it is not ready. |
 
-Neu API bat `RequireApiKey`, dat `ApiKey` trong `Config/appsettings.json` tren may local. Khong commit API key that.
+If the API enables `RequireApiKey`, set `ApiKey` in the local `Config/appsettings.json`. Do not commit a real API key.
 
-## Luong dang nhap va goi API
+## Sign-in and API-call flow
 
 ```text
 FrmLogin
 -> AuthApiClient
 -> POST /api/auth/login
 -> ApiHttpClient.SetBearerToken(token)
--> UserSession (username, role cho UI)
+-> UserSession (username, role for the UI)
 -> FrmMain
 ```
 
-Sau khi dang nhap, `ApiHttpClient` tu them header `Authorization: Bearer <jwt>`. Neu cau hinh API key, client them `X-API-Key`. JWT chi duoc giu trong bo nho cua tien trinh, khong ghi ra file.
+After sign-in, `ApiHttpClient` automatically adds the `Authorization: Bearer <jwt>` header. If an API key is configured, the client adds `X-API-Key`. The JWT remains in process memory only and is never written to a file.
 
-## Chay ung dung
+## Run the application
 
-Chay API truoc, hoac bat `AutoStartLocalApi` theo dieu kien o tren. Tu root solution:
+Run the API first, or enable `AutoStartLocalApi` under the conditions above. From the solution root:
 
 ```powershell
 dotnet run --project QuanLyKhoHang.WinForms/QuanLyKhoHang.WinForms.csproj
 ```
 
-Trong Visual Studio, dat `QuanLyKhoHang.WinForms` lam Startup Project va bam Start. Khong dat `QuanLyKhoHang.Tests` lam Startup Project neu muon mo giao dien; project test chay xong se tra exit code `0`.
+In Visual Studio, set `QuanLyKhoHang.WinForms` as the Startup Project and click Start. Do not set `QuanLyKhoHang.Tests` as the Startup Project when you want to open the UI; the test project completes and returns exit code `0`.
 
 ## Publish
 
@@ -96,13 +96,13 @@ dotnet publish QuanLyKhoHang.WinForms/QuanLyKhoHang.WinForms.csproj `
   --self-contained true
 ```
 
-Ban publish van can API va PostgreSQL dang hoat dong o URL da cau hinh.
+The published application still requires the API and PostgreSQL to be available at the configured URL.
 
-## Quy tac phat trien
+## Development rules
 
-- Form goi lop trong `ApiClients/`; khong tao `HttpClient` truc tiep trong form.
-- Khong viet SQL trong WinForms.
-- Logic xu ly dat trong `*.cs`; thay doi giao dien bang Designer khi co the.
-- Khi sua `*.Designer.cs`, kiem tra DPI va build lai de tranh loi layout.
-- Khi doi route/ten cot API, cap nhat API client va binding cua DataGridView/ComboBox.
-- Kiem tra phan quyen o UI chi de cai thien trai nghiem; API la lop bao ve bat buoc.
+- Forms call classes in `ApiClients/`; do not create `HttpClient` directly in a form.
+- Do not write SQL in WinForms.
+- Put processing logic in `*.cs`; change UI through the Designer when possible.
+- When editing `*.Designer.cs`, check DPI behavior and rebuild to prevent layout issues.
+- When changing API routes or column names, update API clients and DataGridView/ComboBox bindings.
+- UI authorization improves the user experience only; the API is the mandatory protection layer.

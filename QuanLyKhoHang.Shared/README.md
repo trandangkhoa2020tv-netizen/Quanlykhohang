@@ -1,32 +1,32 @@
 # QuanLyKhoHang.Shared
 
-Class library target `net9.0`, chua model dung chung cho `QuanLyKhoHang.Api`, `QuanLyKhoHang.WinForms` va test. Project nay khong chua UI, SQL, HTTP client hay logic truy cap database.
+A class library targeting `net9.0` that contains models shared by `QuanLyKhoHang.Api`, `QuanLyKhoHang.WinForms`, and the tests. This project contains no UI, SQL, HTTP clients, or database-access logic.
 
 ## Models
 
-| File | Du lieu |
+| File | Data |
 | --- | --- |
-| `Account.cs` | Tai khoan va thong tin quyen. |
-| `Product.cs` | Hang hoa va ton kho. |
-| `ProductCategory.cs` | Loai hang. |
-| `Supplier.cs` | Nha cung cap. |
-| `Customer.cs` | Khach hang. |
-| `Employee.cs` | Nhan vien. |
-| `GoodsReceipt.cs` / `GoodsReceiptDetail.cs` | Phieu nhap va chi tiet. |
-| `GoodsIssue.cs` / `GoodsIssueDetail.cs` | Phieu xuat va chi tiet. |
-| `DashboardModels.cs` | DTO tong hop cho dashboard. |
-| `UserSession.cs` | Trang thai user dung cho desktop sau dang nhap. |
+| `Account.cs` | Accounts and authorization information. |
+| `Product.cs` | Products and inventory. |
+| `ProductCategory.cs` | Product categories. |
+| `Supplier.cs` | Suppliers. |
+| `Customer.cs` | Customers. |
+| `Employee.cs` | Employees. |
+| `GoodsReceipt.cs` / `GoodsReceiptDetail.cs` | Goods receipts and their details. |
+| `GoodsIssue.cs` / `GoodsIssueDetail.cs` | Goods issues and their details. |
+| `DashboardModels.cs` | Aggregated DTOs for the dashboard. |
+| `UserSession.cs` | User state used by the desktop application after sign-in. |
 
-## Nguyen tac
+## Principles
 
-- Giữ model don gian, khong tham chieu WinForms, ASP.NET Core hay Npgsql.
-- Thay doi model co the anh huong API, client va serialization; build toan solution sau moi thay doi.
-- Khong dat password, API key, connection string hoac logic bao mat vao Shared.
-- DTO request/response chi dung rieng cho API nen de trong `QuanLyKhoHang.Api/DTOs`.
+- Keep models simple and independent of WinForms, ASP.NET Core, and Npgsql.
+- Model changes can affect the API, client, and serialization; build the entire solution after every change.
+- Do not put passwords, API keys, connection strings, or security logic in Shared.
+- Keep API-specific request/response DTOs in `QuanLyKhoHang.Api/DTOs`.
 
 ## Build
 
-Project duoc build tu dong khi build solution:
+The project is built automatically when the solution is built:
 
 ```powershell
 dotnet build QuanLyKhoHang.sln

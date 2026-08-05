@@ -66,8 +66,8 @@ namespace QuanLyKhoHang.Forms
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             pnlScroll = new Panel();
             tlpPage = new TableLayoutPanel();
             pnlHeader = new Panel();
@@ -98,22 +98,19 @@ namespace QuanLyKhoHang.Forms
             lblGiaTriKhoNote = new Label();
             tlpContent = new TableLayoutPanel();
             pnlNhapXuat = new Panel();
+            chartNhapXuat = new DashboardChart();
             lblNhapXuatSubtitle = new Label();
             lblNhapXuatTitle = new Label();
-            chartNhapXuat = new DashboardChart();
             pnlDanhMuc = new Panel();
+            chartDanhMuc = new DashboardChart();
             lblDanhMucSubtitle = new Label();
             lblDanhMucTitle = new Label();
-            chartDanhMuc = new DashboardChart();
             pnlTonKho = new Panel();
+            chartTonKho = new DashboardChart();
             lblTonKhoSubtitle = new Label();
             lblTonKhoTitle = new Label();
-            chartTonKho = new DashboardChart();
             pnlKhachHang = new Panel();
             dgvKhachHang = new DataGridView();
-            colTenKhachHang = new DataGridViewTextBoxColumn();
-            colSoLanMua = new DataGridViewTextBoxColumn();
-            colTongGiaTri = new DataGridViewTextBoxColumn();
             lblKhachHangChartSubtitle = new Label();
             lblKhachHangChartTitle = new Label();
             pnlScroll.SuspendLayout();
@@ -140,7 +137,7 @@ namespace QuanLyKhoHang.Forms
             pnlScroll.Dock = DockStyle.Fill;
             pnlScroll.Location = new Point(0, 0);
             pnlScroll.Name = "pnlScroll";
-            pnlScroll.Size = new Size(940, 739);
+            pnlScroll.Size = new Size(1395, 779);
             pnlScroll.TabIndex = 0;
             // 
             // tlpPage
@@ -159,7 +156,7 @@ namespace QuanLyKhoHang.Forms
             tlpPage.RowStyles.Add(new RowStyle(SizeType.Absolute, 90F));
             tlpPage.RowStyles.Add(new RowStyle(SizeType.Absolute, 132F));
             tlpPage.RowStyles.Add(new RowStyle(SizeType.Absolute, 710F));
-            tlpPage.Size = new Size(919, 968);
+            tlpPage.Size = new Size(1374, 968);
             tlpPage.TabIndex = 0;
             // 
             // pnlHeader
@@ -172,7 +169,7 @@ namespace QuanLyKhoHang.Forms
             pnlHeader.Location = new Point(20, 12);
             pnlHeader.Margin = new Padding(0, 0, 0, 8);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(879, 82);
+            pnlHeader.Size = new Size(1334, 82);
             pnlHeader.TabIndex = 0;
             // 
             // lblTitle
@@ -180,7 +177,7 @@ namespace QuanLyKhoHang.Forms
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(30, 58, 138);
-            lblTitle.Location = new Point(14, 9);
+            lblTitle.Location = new Point(0, 10);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(361, 41);
             lblTitle.TabIndex = 0;
@@ -202,7 +199,7 @@ namespace QuanLyKhoHang.Forms
             lblTrangThai.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblTrangThai.Font = new Font("Segoe UI", 8.5F);
             lblTrangThai.ForeColor = Color.FromArgb(100, 116, 139);
-            lblTrangThai.Location = new Point(559, 54);
+            lblTrangThai.Location = new Point(1014, 54);
             lblTrangThai.Name = "lblTrangThai";
             lblTrangThai.Size = new Size(180, 22);
             lblTrangThai.TabIndex = 2;
@@ -218,7 +215,7 @@ namespace QuanLyKhoHang.Forms
             btnTaiLai.FlatStyle = FlatStyle.Flat;
             btnTaiLai.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnTaiLai.ForeColor = Color.White;
-            btnTaiLai.Location = new Point(749, 10);
+            btnTaiLai.Location = new Point(1204, 10);
             btnTaiLai.Name = "btnTaiLai";
             btnTaiLai.Size = new Size(112, 38);
             btnTaiLai.TabIndex = 3;
@@ -243,7 +240,7 @@ namespace QuanLyKhoHang.Forms
             tlpCards.Name = "tlpCards";
             tlpCards.RowCount = 1;
             tlpCards.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpCards.Size = new Size(879, 132);
+            tlpCards.Size = new Size(1334, 132);
             tlpCards.TabIndex = 1;
             // 
             // cardHangHoa
@@ -257,7 +254,7 @@ namespace QuanLyKhoHang.Forms
             cardHangHoa.Location = new Point(6, 6);
             cardHangHoa.Margin = new Padding(6);
             cardHangHoa.Name = "cardHangHoa";
-            cardHangHoa.Size = new Size(207, 120);
+            cardHangHoa.Size = new Size(321, 120);
             cardHangHoa.TabIndex = 0;
             cardHangHoa.Paint += DashboardPanel_Paint;
             // 
@@ -289,7 +286,7 @@ namespace QuanLyKhoHang.Forms
             lblHangHoaValue.ForeColor = Color.FromArgb(15, 23, 42);
             lblHangHoaValue.Location = new Point(20, 42);
             lblHangHoaValue.Name = "lblHangHoaValue";
-            lblHangHoaValue.Size = new Size(172, 39);
+            lblHangHoaValue.Size = new Size(286, 39);
             lblHangHoaValue.TabIndex = 2;
             lblHangHoaValue.Text = "—";
             // 
@@ -301,7 +298,7 @@ namespace QuanLyKhoHang.Forms
             lblHangHoaNote.ForeColor = Color.FromArgb(100, 116, 139);
             lblHangHoaNote.Location = new Point(21, 86);
             lblHangHoaNote.Name = "lblHangHoaNote";
-            lblHangHoaNote.Size = new Size(171, 20);
+            lblHangHoaNote.Size = new Size(285, 20);
             lblHangHoaNote.TabIndex = 3;
             lblHangHoaNote.Text = "Đang tải...";
             // 
@@ -313,10 +310,10 @@ namespace QuanLyKhoHang.Forms
             cardKhachHang.Controls.Add(lblKhachHangValue);
             cardKhachHang.Controls.Add(lblKhachHangNote);
             cardKhachHang.Dock = DockStyle.Fill;
-            cardKhachHang.Location = new Point(225, 6);
+            cardKhachHang.Location = new Point(339, 6);
             cardKhachHang.Margin = new Padding(6);
             cardKhachHang.Name = "cardKhachHang";
-            cardKhachHang.Size = new Size(207, 120);
+            cardKhachHang.Size = new Size(321, 120);
             cardKhachHang.TabIndex = 1;
             cardKhachHang.Paint += DashboardPanel_Paint;
             // 
@@ -348,7 +345,7 @@ namespace QuanLyKhoHang.Forms
             lblKhachHangValue.ForeColor = Color.FromArgb(15, 23, 42);
             lblKhachHangValue.Location = new Point(20, 42);
             lblKhachHangValue.Name = "lblKhachHangValue";
-            lblKhachHangValue.Size = new Size(172, 39);
+            lblKhachHangValue.Size = new Size(286, 39);
             lblKhachHangValue.TabIndex = 2;
             lblKhachHangValue.Text = "—";
             // 
@@ -360,7 +357,7 @@ namespace QuanLyKhoHang.Forms
             lblKhachHangNote.ForeColor = Color.FromArgb(100, 116, 139);
             lblKhachHangNote.Location = new Point(21, 86);
             lblKhachHangNote.Name = "lblKhachHangNote";
-            lblKhachHangNote.Size = new Size(171, 20);
+            lblKhachHangNote.Size = new Size(285, 20);
             lblKhachHangNote.TabIndex = 3;
             lblKhachHangNote.Text = "Đang tải...";
             // 
@@ -372,10 +369,10 @@ namespace QuanLyKhoHang.Forms
             cardNhanVien.Controls.Add(lblNhanVienValue);
             cardNhanVien.Controls.Add(lblNhanVienNote);
             cardNhanVien.Dock = DockStyle.Fill;
-            cardNhanVien.Location = new Point(444, 6);
+            cardNhanVien.Location = new Point(672, 6);
             cardNhanVien.Margin = new Padding(6);
             cardNhanVien.Name = "cardNhanVien";
-            cardNhanVien.Size = new Size(207, 120);
+            cardNhanVien.Size = new Size(321, 120);
             cardNhanVien.TabIndex = 2;
             cardNhanVien.Paint += DashboardPanel_Paint;
             // 
@@ -407,7 +404,7 @@ namespace QuanLyKhoHang.Forms
             lblNhanVienValue.ForeColor = Color.FromArgb(15, 23, 42);
             lblNhanVienValue.Location = new Point(20, 42);
             lblNhanVienValue.Name = "lblNhanVienValue";
-            lblNhanVienValue.Size = new Size(172, 39);
+            lblNhanVienValue.Size = new Size(286, 39);
             lblNhanVienValue.TabIndex = 2;
             lblNhanVienValue.Text = "—";
             // 
@@ -419,7 +416,7 @@ namespace QuanLyKhoHang.Forms
             lblNhanVienNote.ForeColor = Color.FromArgb(100, 116, 139);
             lblNhanVienNote.Location = new Point(21, 86);
             lblNhanVienNote.Name = "lblNhanVienNote";
-            lblNhanVienNote.Size = new Size(171, 20);
+            lblNhanVienNote.Size = new Size(285, 20);
             lblNhanVienNote.TabIndex = 3;
             lblNhanVienNote.Text = "Đang tải...";
             // 
@@ -431,10 +428,10 @@ namespace QuanLyKhoHang.Forms
             cardGiaTriKho.Controls.Add(lblGiaTriKhoValue);
             cardGiaTriKho.Controls.Add(lblGiaTriKhoNote);
             cardGiaTriKho.Dock = DockStyle.Fill;
-            cardGiaTriKho.Location = new Point(663, 6);
+            cardGiaTriKho.Location = new Point(1005, 6);
             cardGiaTriKho.Margin = new Padding(6);
             cardGiaTriKho.Name = "cardGiaTriKho";
-            cardGiaTriKho.Size = new Size(210, 120);
+            cardGiaTriKho.Size = new Size(323, 120);
             cardGiaTriKho.TabIndex = 3;
             cardGiaTriKho.Paint += DashboardPanel_Paint;
             // 
@@ -466,7 +463,7 @@ namespace QuanLyKhoHang.Forms
             lblGiaTriKhoValue.ForeColor = Color.FromArgb(15, 23, 42);
             lblGiaTriKhoValue.Location = new Point(20, 42);
             lblGiaTriKhoValue.Name = "lblGiaTriKhoValue";
-            lblGiaTriKhoValue.Size = new Size(175, 39);
+            lblGiaTriKhoValue.Size = new Size(288, 39);
             lblGiaTriKhoValue.TabIndex = 2;
             lblGiaTriKhoValue.Text = "—";
             // 
@@ -478,7 +475,7 @@ namespace QuanLyKhoHang.Forms
             lblGiaTriKhoNote.ForeColor = Color.FromArgb(100, 116, 139);
             lblGiaTriKhoNote.Location = new Point(21, 86);
             lblGiaTriKhoNote.Name = "lblGiaTriKhoNote";
-            lblGiaTriKhoNote.Size = new Size(174, 20);
+            lblGiaTriKhoNote.Size = new Size(287, 20);
             lblGiaTriKhoNote.TabIndex = 3;
             lblGiaTriKhoNote.Text = "Đang tải...";
             // 
@@ -498,7 +495,7 @@ namespace QuanLyKhoHang.Forms
             tlpContent.RowCount = 2;
             tlpContent.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tlpContent.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tlpContent.Size = new Size(879, 714);
+            tlpContent.Size = new Size(1334, 714);
             tlpContent.TabIndex = 2;
             // 
             // pnlNhapXuat
@@ -512,9 +509,20 @@ namespace QuanLyKhoHang.Forms
             pnlNhapXuat.Margin = new Padding(6);
             pnlNhapXuat.Name = "pnlNhapXuat";
             pnlNhapXuat.Padding = new Padding(8);
-            pnlNhapXuat.Size = new Size(427, 345);
+            pnlNhapXuat.Size = new Size(655, 345);
             pnlNhapXuat.TabIndex = 0;
             pnlNhapXuat.Paint += DashboardPanel_Paint;
+            // 
+            // chartNhapXuat
+            // 
+            chartNhapXuat.BackColor = Color.White;
+            chartNhapXuat.Dock = DockStyle.Fill;
+            chartNhapXuat.Font = new Font("Segoe UI", 8.5F);
+            chartNhapXuat.ForeColor = Color.FromArgb(51, 65, 85);
+            chartNhapXuat.Location = new Point(8, 72);
+            chartNhapXuat.Name = "chartNhapXuat";
+            chartNhapXuat.Size = new Size(639, 265);
+            chartNhapXuat.TabIndex = 2;
             // 
             // lblNhapXuatSubtitle
             // 
@@ -524,7 +532,7 @@ namespace QuanLyKhoHang.Forms
             lblNhapXuatSubtitle.Location = new Point(8, 42);
             lblNhapXuatSubtitle.Name = "lblNhapXuatSubtitle";
             lblNhapXuatSubtitle.Padding = new Padding(16, 2, 8, 0);
-            lblNhapXuatSubtitle.Size = new Size(411, 30);
+            lblNhapXuatSubtitle.Size = new Size(639, 30);
             lblNhapXuatSubtitle.TabIndex = 1;
             lblNhapXuatSubtitle.Text = "Tổng số lượng phát sinh trong 12 tháng gần nhất";
             // 
@@ -536,32 +544,35 @@ namespace QuanLyKhoHang.Forms
             lblNhapXuatTitle.Location = new Point(8, 8);
             lblNhapXuatTitle.Name = "lblNhapXuatTitle";
             lblNhapXuatTitle.Padding = new Padding(16, 10, 8, 0);
-            lblNhapXuatTitle.Size = new Size(411, 34);
+            lblNhapXuatTitle.Size = new Size(639, 34);
             lblNhapXuatTitle.TabIndex = 0;
             lblNhapXuatTitle.Text = "Nhập – xuất kho theo tháng";
-            //
-            // chartNhapXuat
-            //
-            chartNhapXuat.Dock = DockStyle.Fill;
-            chartNhapXuat.Location = new Point(8, 72);
-            chartNhapXuat.Name = "chartNhapXuat";
-            chartNhapXuat.Size = new Size(411, 265);
-            chartNhapXuat.TabIndex = 2;
-            //
+            // 
             // pnlDanhMuc
-            //
+            // 
             pnlDanhMuc.BackColor = Color.White;
             pnlDanhMuc.Controls.Add(chartDanhMuc);
             pnlDanhMuc.Controls.Add(lblDanhMucSubtitle);
             pnlDanhMuc.Controls.Add(lblDanhMucTitle);
             pnlDanhMuc.Dock = DockStyle.Fill;
-            pnlDanhMuc.Location = new Point(445, 6);
+            pnlDanhMuc.Location = new Point(673, 6);
             pnlDanhMuc.Margin = new Padding(6);
             pnlDanhMuc.Name = "pnlDanhMuc";
             pnlDanhMuc.Padding = new Padding(8);
-            pnlDanhMuc.Size = new Size(428, 345);
+            pnlDanhMuc.Size = new Size(655, 345);
             pnlDanhMuc.TabIndex = 1;
             pnlDanhMuc.Paint += DashboardPanel_Paint;
+            // 
+            // chartDanhMuc
+            // 
+            chartDanhMuc.BackColor = Color.White;
+            chartDanhMuc.Dock = DockStyle.Fill;
+            chartDanhMuc.Font = new Font("Segoe UI", 8.5F);
+            chartDanhMuc.ForeColor = Color.FromArgb(51, 65, 85);
+            chartDanhMuc.Location = new Point(8, 72);
+            chartDanhMuc.Name = "chartDanhMuc";
+            chartDanhMuc.Size = new Size(639, 265);
+            chartDanhMuc.TabIndex = 2;
             // 
             // lblDanhMucSubtitle
             // 
@@ -571,7 +582,7 @@ namespace QuanLyKhoHang.Forms
             lblDanhMucSubtitle.Location = new Point(8, 42);
             lblDanhMucSubtitle.Name = "lblDanhMucSubtitle";
             lblDanhMucSubtitle.Padding = new Padding(16, 2, 8, 0);
-            lblDanhMucSubtitle.Size = new Size(412, 30);
+            lblDanhMucSubtitle.Size = new Size(639, 30);
             lblDanhMucSubtitle.TabIndex = 1;
             lblDanhMucSubtitle.Text = "Tỷ lệ số mặt hàng đang hoạt động";
             // 
@@ -583,20 +594,12 @@ namespace QuanLyKhoHang.Forms
             lblDanhMucTitle.Location = new Point(8, 8);
             lblDanhMucTitle.Name = "lblDanhMucTitle";
             lblDanhMucTitle.Padding = new Padding(16, 10, 8, 0);
-            lblDanhMucTitle.Size = new Size(412, 34);
+            lblDanhMucTitle.Size = new Size(639, 34);
             lblDanhMucTitle.TabIndex = 0;
             lblDanhMucTitle.Text = "Hàng hóa theo danh mục";
-            //
-            // chartDanhMuc
-            //
-            chartDanhMuc.Dock = DockStyle.Fill;
-            chartDanhMuc.Location = new Point(8, 72);
-            chartDanhMuc.Name = "chartDanhMuc";
-            chartDanhMuc.Size = new Size(412, 265);
-            chartDanhMuc.TabIndex = 2;
-            //
+            // 
             // pnlTonKho
-            //
+            // 
             pnlTonKho.BackColor = Color.White;
             pnlTonKho.Controls.Add(chartTonKho);
             pnlTonKho.Controls.Add(lblTonKhoSubtitle);
@@ -606,9 +609,20 @@ namespace QuanLyKhoHang.Forms
             pnlTonKho.Margin = new Padding(6);
             pnlTonKho.Name = "pnlTonKho";
             pnlTonKho.Padding = new Padding(8);
-            pnlTonKho.Size = new Size(427, 345);
+            pnlTonKho.Size = new Size(655, 345);
             pnlTonKho.TabIndex = 2;
             pnlTonKho.Paint += DashboardPanel_Paint;
+            // 
+            // chartTonKho
+            // 
+            chartTonKho.BackColor = Color.White;
+            chartTonKho.Dock = DockStyle.Fill;
+            chartTonKho.Font = new Font("Segoe UI", 8.5F);
+            chartTonKho.ForeColor = Color.FromArgb(51, 65, 85);
+            chartTonKho.Location = new Point(8, 72);
+            chartTonKho.Name = "chartTonKho";
+            chartTonKho.Size = new Size(639, 265);
+            chartTonKho.TabIndex = 2;
             // 
             // lblTonKhoSubtitle
             // 
@@ -618,7 +632,7 @@ namespace QuanLyKhoHang.Forms
             lblTonKhoSubtitle.Location = new Point(8, 42);
             lblTonKhoSubtitle.Name = "lblTonKhoSubtitle";
             lblTonKhoSubtitle.Padding = new Padding(16, 2, 8, 0);
-            lblTonKhoSubtitle.Size = new Size(411, 30);
+            lblTonKhoSubtitle.Size = new Size(639, 30);
             lblTonKhoSubtitle.TabIndex = 1;
             lblTonKhoSubtitle.Text = "Các mặt hàng có số lượng tồn cao nhất";
             // 
@@ -630,30 +644,22 @@ namespace QuanLyKhoHang.Forms
             lblTonKhoTitle.Location = new Point(8, 8);
             lblTonKhoTitle.Name = "lblTonKhoTitle";
             lblTonKhoTitle.Padding = new Padding(16, 10, 8, 0);
-            lblTonKhoTitle.Size = new Size(411, 34);
+            lblTonKhoTitle.Size = new Size(639, 34);
             lblTonKhoTitle.TabIndex = 0;
             lblTonKhoTitle.Text = "Sản phẩm tồn nhiều nhất";
-            //
-            // chartTonKho
-            //
-            chartTonKho.Dock = DockStyle.Fill;
-            chartTonKho.Location = new Point(8, 72);
-            chartTonKho.Name = "chartTonKho";
-            chartTonKho.Size = new Size(411, 265);
-            chartTonKho.TabIndex = 2;
-            //
+            // 
             // pnlKhachHang
-            //
+            // 
             pnlKhachHang.BackColor = Color.White;
             pnlKhachHang.Controls.Add(dgvKhachHang);
             pnlKhachHang.Controls.Add(lblKhachHangChartSubtitle);
             pnlKhachHang.Controls.Add(lblKhachHangChartTitle);
             pnlKhachHang.Dock = DockStyle.Fill;
-            pnlKhachHang.Location = new Point(445, 363);
+            pnlKhachHang.Location = new Point(673, 363);
             pnlKhachHang.Margin = new Padding(6);
             pnlKhachHang.Name = "pnlKhachHang";
             pnlKhachHang.Padding = new Padding(8);
-            pnlKhachHang.Size = new Size(428, 345);
+            pnlKhachHang.Size = new Size(655, 345);
             pnlKhachHang.TabIndex = 3;
             pnlKhachHang.Paint += DashboardPanel_Paint;
             // 
@@ -666,27 +672,25 @@ namespace QuanLyKhoHang.Forms
             dgvKhachHang.BackgroundColor = Color.White;
             dgvKhachHang.BorderStyle = BorderStyle.None;
             dgvKhachHang.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvKhachHang.AutoGenerateColumns = false;
-            dgvKhachHang.Columns.AddRange(new DataGridViewColumn[] { colTenKhachHang, colSoLanMua, colTongGiaTri });
             dgvKhachHang.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(239, 246, 255);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(30, 41, 59);
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvKhachHang.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(239, 246, 255);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(30, 41, 59);
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvKhachHang.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvKhachHang.ColumnHeadersHeight = 34;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.White;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 8.5F);
-            dataGridViewCellStyle2.ForeColor = Color.FromArgb(51, 65, 85);
-            dataGridViewCellStyle2.Padding = new Padding(4, 0, 4, 0);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(219, 234, 254);
-            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(30, 64, 175);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvKhachHang.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.White;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 8.5F);
+            dataGridViewCellStyle6.ForeColor = Color.FromArgb(51, 65, 85);
+            dataGridViewCellStyle6.Padding = new Padding(4, 0, 4, 0);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(219, 234, 254);
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(30, 64, 175);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dgvKhachHang.DefaultCellStyle = dataGridViewCellStyle6;
             dgvKhachHang.Dock = DockStyle.Fill;
             dgvKhachHang.EnableHeadersVisualStyles = false;
             dgvKhachHang.GridColor = Color.FromArgb(226, 232, 240);
@@ -698,35 +702,8 @@ namespace QuanLyKhoHang.Forms
             dgvKhachHang.RowHeadersWidth = 51;
             dgvKhachHang.RowTemplate.Height = 30;
             dgvKhachHang.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvKhachHang.Size = new Size(412, 265);
+            dgvKhachHang.Size = new Size(639, 265);
             dgvKhachHang.TabIndex = 2;
-            // 
-            // colTenKhachHang
-            // 
-            colTenKhachHang.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colTenKhachHang.DataPropertyName = "TenKhachHang";
-            colTenKhachHang.HeaderText = "Khách hàng";
-            colTenKhachHang.MinimumWidth = 120;
-            colTenKhachHang.Name = "colTenKhachHang";
-            colTenKhachHang.ReadOnly = true;
-            // 
-            // colSoLanMua
-            // 
-            colSoLanMua.DataPropertyName = "SoLanMua";
-            colSoLanMua.HeaderText = "Số lần mua";
-            colSoLanMua.MinimumWidth = 80;
-            colSoLanMua.Name = "colSoLanMua";
-            colSoLanMua.ReadOnly = true;
-            colSoLanMua.Width = 95;
-            // 
-            // colTongGiaTri
-            // 
-            colTongGiaTri.DataPropertyName = "TongGiaTri";
-            colTongGiaTri.HeaderText = "Tổng giá trị";
-            colTongGiaTri.MinimumWidth = 100;
-            colTongGiaTri.Name = "colTongGiaTri";
-            colTongGiaTri.ReadOnly = true;
-            colTongGiaTri.Width = 120;
             // 
             // lblKhachHangChartSubtitle
             // 
@@ -736,7 +713,7 @@ namespace QuanLyKhoHang.Forms
             lblKhachHangChartSubtitle.Location = new Point(8, 42);
             lblKhachHangChartSubtitle.Name = "lblKhachHangChartSubtitle";
             lblKhachHangChartSubtitle.Padding = new Padding(16, 2, 8, 0);
-            lblKhachHangChartSubtitle.Size = new Size(412, 30);
+            lblKhachHangChartSubtitle.Size = new Size(639, 30);
             lblKhachHangChartSubtitle.TabIndex = 1;
             lblKhachHangChartSubtitle.Text = "Xếp hạng theo tổng giá trị phiếu xuất";
             // 
@@ -748,16 +725,16 @@ namespace QuanLyKhoHang.Forms
             lblKhachHangChartTitle.Location = new Point(8, 8);
             lblKhachHangChartTitle.Name = "lblKhachHangChartTitle";
             lblKhachHangChartTitle.Padding = new Padding(16, 10, 8, 0);
-            lblKhachHangChartTitle.Size = new Size(412, 34);
+            lblKhachHangChartTitle.Size = new Size(639, 34);
             lblKhachHangChartTitle.TabIndex = 0;
             lblKhachHangChartTitle.Text = "Khách hàng mua nhiều";
             // 
             // FrmThongKe
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(248, 250, 252);
-            ClientSize = new Size(940, 739);
+            ClientSize = new Size(1395, 779);
             Controls.Add(pnlScroll);
             Font = new Font("Segoe UI", 9.5F);
             FormBorderStyle = FormBorderStyle.None;

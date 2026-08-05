@@ -1,47 +1,47 @@
 # QuanLyKhoHang.Api
 
-Backend ASP.NET Core Minimal API cua he thong Quan Ly Kho Hang. Project target `net9.0`, dung PostgreSQL qua Npgsql va khong dung MVC controller; route duoc chia theo cac file trong `Endpoints/`.
+The ASP.NET Core Minimal API backend for the Inventory Management System. The project targets `net9.0`, uses PostgreSQL through Npgsql, and does not use MVC controllers; routes are organized in the `Endpoints/` files.
 
-## Trach nhiem
+## Responsibilities
 
-- Dang nhap, phat va kiem tra JWT.
-- Kiem tra API key tuy chon va phan quyen role `Admin`.
-- Validate request, xu ly phieu nhap/xuat trong transaction.
-- Quan ly hang hoa, danh muc, nha cung cap, khach hang, nhan vien va dashboard.
-- Ghi audit log cho thao tac thay doi du lieu.
-- Tra ve JSON cho WinForms va client khac.
+- Sign-in, JWT issuance, and JWT validation.
+- Optional API-key validation and `Admin` role authorization.
+- Request validation and transactional processing of goods receipts/issues.
+- Management of products, categories, suppliers, customers, employees, and the dashboard.
+- Audit logging for data-changing operations.
+- JSON responses for WinForms and other clients.
 
-## Cau truc
+## Structure
 
 ```text
-Config/        ApiSettings va JwtSettings
-Data/          Ket noi, maintenance va truy van database dung chung
-DTOs/          Request/response DTO
-Endpoints/     Minimal API route theo nghiep vu
-Repositories/  SQL va transaction
-Services/      Validation, rule nghiep vu, JWT, audit
-Program.cs     Bootstrap, DI, middleware va map endpoint
+Config/        ApiSettings and JwtSettings
+Data/          Shared database connection, maintenance, and query utilities
+DTOs/          Request/response DTOs
+Endpoints/     Minimal API routes grouped by business area
+Repositories/  SQL and transactions
+Services/      Validation, business rules, JWT, and audit logging
+Program.cs     Bootstrap, DI, middleware, and endpoint mapping
 ```
 
-## Chay API
+## Run the API
 
-Tu root solution:
+From the solution root:
 
 ```powershell
 dotnet run --project QuanLyKhoHang.Api/QuanLyKhoHang.Api.csproj
 ```
 
-Mac dinh API nghe tai `http://localhost:8088`. Kiem tra nhanh:
+By default, the API listens on `http://localhost:8088`. Quick check:
 
 ```powershell
 Invoke-RestMethod http://localhost:8088/api/health
 ```
 
-Trong Development, Swagger tai `http://localhost:8088/swagger`.
+In Development, Swagger is available at `http://localhost:8088/swagger`.
 
-## Cau hinh
+## Configuration
 
-`appsettings.json` chi giu gia tri khong nhay cam. Dat secret va mat khau database qua bien moi truong hoac file `.env` dung cho tooling local:
+`appsettings.json` contains only non-sensitive values. Set secrets and the database password through environment variables or a `.env` file used by local tooling:
 
 ```text
 QLKH_DB_HOST=localhost
@@ -53,87 +53,87 @@ QLKH_JWT_SECRET=
 QLKH_API_KEY=
 ```
 
-`QLKH_JWT_SECRET` ghi de `JwtSettings.SecretKey`; `QLKH_API_KEY` ghi de `ApiSettings.ApiKey`. Khong dat secret trong `appsettings.json`, source control hoac README.
+`QLKH_JWT_SECRET` overrides `JwtSettings.SecretKey`; `QLKH_API_KEY` overrides `ApiSettings.ApiKey`. Do not put secrets in `appsettings.json`, source control, or a README.
 
-Khi chay bang `dotnet run`, dat cac bien can thiet trong shell hoac cau hinh Environment Variables cua launch profile. File `.env` khong duoc .NET nap tu dong; Docker Compose dung file nay khi chay container.
+When using `dotnet run`, set the required variables in the shell or in the launch profile's Environment Variables configuration. .NET does not load `.env` files automatically; Docker Compose uses this file when it runs containers.
 
-Trong production, API tu choi khoi dong neu:
+In production, the API refuses to start if:
 
-- JWT bi tat, secret trong hoac ngan hon 32 ky tu.
-- `RequireApiKey=true` nhung khong co `QLKH_API_KEY`.
-- CORS cho phep moi origin.
-- URL API khong dung HTTPS.
-- Mat khau database dung gia tri demo bi cam.
+- JWT is disabled, or its secret is empty or shorter than 32 characters.
+- `RequireApiKey=true` but `QLKH_API_KEY` is absent.
+- CORS allows every origin.
+- The API URL does not use HTTPS.
+- The database password uses a prohibited demo value.
 
-## Middleware va gioi han
+## Middleware and limits
 
-Thu tu xu ly chinh:
+Main processing order:
 
 ```text
 CORS
--> kiem tra content type / body size
+-> content-type / body-size validation
 -> Swagger (Development)
--> API key (neu bat)
--> doc JWT
--> JWT guard cho route khong public
+-> API key (when enabled)
+-> JWT parsing
+-> JWT guard for non-public routes
 -> rate limiter
 -> endpoint
 ```
 
-- POST/PUT/PATCH duoi `/api` chi nhan JSON va toi da 256 KB.
-- Global limiter: 120 request/phut theo user da dang nhap hoac IP.
-- Login: 5 lan/15 phut.
-- Cac route hang hoa co policy rieng cho doc/tao/sua/xoa.
-- `429` duoc tra khi vuot gioi han.
+- POST/PUT/PATCH requests under `/api` accept JSON only and are limited to 256 KB.
+- Global limiter: 120 requests/minute per signed-in user or IP address.
+- Sign-in: 5 attempts/15 minutes.
+- Product routes have separate policies for read/create/update/delete.
+- `429` is returned when a rate limit is exceeded.
 
-Route public: `/`, `/api/health`, `/api/chuc-nang`, `/api/docs`, `/api/auth/login` va `/swagger` trong Development.
+Public routes: `/`, `/api/health`, `/api/chuc-nang`, `/api/docs`, `/api/auth/login`, and `/swagger` in Development.
 
-## Endpoint nhom
+## Endpoint groups
 
-| Nhom | Duong dan chinh |
+| Group | Main routes |
 | --- | --- |
-| He thong | `/api/health`, `/api/chuc-nang`, `/api/docs` |
-| Xac thuc | `POST /api/auth/login` |
-| Hang hoa | `/api/hang-hoa`, `/api/v2/hang-hoa` |
-| Danh muc | `/api/loai-hang`, `/api/nha-cung-cap` |
-| Doi tac | `/api/khach-hang`, `/api/nhan-vien` |
-| Kho | `/api/ton-kho/thap` |
-| Phieu nhap | `/api/phieu-nhap` va chi tiet |
-| Phieu xuat | `/api/phieu-xuat` va chi tiet/thong tin |
-| Dashboard | Route trong `DashboardEndpoints.cs` |
+| System | `/api/health`, `/api/chuc-nang`, `/api/docs` |
+| Authentication | `POST /api/auth/login` |
+| Products | `/api/hang-hoa`, `/api/v2/hang-hoa` |
+| Catalog | `/api/loai-hang`, `/api/nha-cung-cap` |
+| Partners | `/api/khach-hang`, `/api/nhan-vien` |
+| Inventory | `/api/ton-kho/thap` |
+| Goods receipts | `/api/phieu-nhap` and details |
+| Goods issues | `/api/phieu-xuat` and details/information |
+| Dashboard | Routes in `DashboardEndpoints.cs` |
 
-Route `/api/v2/...` tra DTO typed cho client moi. Cac route `/api/...` tuong thich voi client DataTable cua WinForms.
+Routes under `/api/v2/...` return typed DTOs for newer clients. The `/api/...` routes are compatible with the WinForms DataTable client.
 
-## Migration va seed
+## Migration and seeding
 
-Mac dinh API khong sua schema database khi khoi dong. Chi trong Development:
+By default, the API does not modify the database schema at startup. In Development only:
 
 ```powershell
 $env:QLKH_AUTO_MIGRATE = "1"
-# Tuy chon: seed du lieu nghiep vu mau
+# Optional: seed sample business data
 $env:QLKH_SEED_DEMO_DATA = "1"
 dotnet run --project QuanLyKhoHang.Api/QuanLyKhoHang.Api.csproj
 ```
 
-Loi migration lam API dung khoi dong. Khong bat cac bien nay trong production; hay chay script SQL va quy trinh migration co kiem soat.
+A migration failure prevents the API from starting. Do not enable these variables in production; run SQL scripts and a controlled migration process instead.
 
-## Ma loi
+## Error codes
 
-| HTTP | Y nghia |
+| HTTP | Meaning |
 | --- | --- |
-| `400` | Du lieu hoac rule nghiep vu khong hop le. |
-| `401` | API key/JWT thieu, sai hoac het han. |
-| `403` | Da xac thuc nhung khong du role. |
-| `404` | Khong tim thay du lieu. |
-| `413` | Payload lon hon 256 KB. |
-| `415` | POST/PUT/PATCH khong gui JSON. |
-| `429` | Vuot rate limit. |
-| `500` | Loi he thong. |
+| `400` | Invalid data or business rule. |
+| `401` | Missing, invalid, or expired API key/JWT. |
+| `403` | Authenticated, but missing the required role. |
+| `404` | Data was not found. |
+| `413` | Payload exceeds 256 KB. |
+| `415` | A POST/PUT/PATCH request did not send JSON. |
+| `429` | Rate limit exceeded. |
+| `500` | System error. |
 
-## Quy tac phat trien
+## Development rules
 
-- Endpoint khong viet SQL truc tiep; dua logic vao service/repository.
-- SQL co input phai dung `NpgsqlParameter`.
-- Thay doi ton kho phai nam trong transaction.
-- Endpoint thay doi du lieu can xem xet validation, phan quyen va audit log.
-- Them endpoint can cap nhat test va WinForms client neu desktop su dung endpoint do.
+- Endpoints must not write SQL directly; place logic in services/repositories.
+- SQL with input must use `NpgsqlParameter`.
+- Inventory changes must be performed within a transaction.
+- Data-changing endpoints require consideration of validation, authorization, and audit logging.
+- When adding an endpoint, update tests and the WinForms client if the desktop application uses it.

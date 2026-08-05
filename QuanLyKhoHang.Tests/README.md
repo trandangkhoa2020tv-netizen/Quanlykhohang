@@ -1,43 +1,43 @@
 # QuanLyKhoHang.Tests
 
-Project xUnit target `net9.0` de kiem tra cac rule khong can WinForms hay PostgreSQL that. Project reference `QuanLyKhoHang.Api` va `QuanLyKhoHang.Shared`.
+An xUnit project targeting `net9.0` that verifies rules which do not require WinForms or a real PostgreSQL instance. The project references `QuanLyKhoHang.Api` and `QuanLyKhoHang.Shared`.
 
-## Test hien co
+## Current tests
 
-| File | Pham vi |
+| File | Coverage |
 | --- | --- |
-| `JwtTokenServiceTests.cs` | Tao, validate va doc username/role tu JWT. |
-| `ServiceValidationTests.cs` | Validation cua service cho dang nhap, hang hoa, phieu nhap va phieu xuat. |
-| `SecurityIntegrationTests.cs` | API key validator, authorization role va chan payload login qua lon. |
+| `JwtTokenServiceTests.cs` | Creates, validates, and reads usernames/roles from JWTs. |
+| `ServiceValidationTests.cs` | Service validation for sign-in, products, goods receipts, and goods issues. |
+| `SecurityIntegrationTests.cs` | API-key validation, role authorization, and rejection of oversized sign-in payloads. |
 
-Test hien tai bao gom cac tinh huong nhu request dang nhap rong, hang hoa thieu ten/ton am, phieu khong co chi tiet, so luong khong hop le, JWT sai dinh dang, user khong du quyen va payload lon hon gioi han API.
+The current tests include cases such as empty sign-in requests, products with missing names or negative stock, documents without details, invalid quantities, malformed JWTs, unauthorized users, and payloads exceeding the API limit.
 
-## Chay test
+## Run tests
 
-Tu root repository:
+From the repository root:
 
 ```powershell
 dotnet test QuanLyKhoHang.sln
 ```
 
-Chi chay project test:
+Run only the test project:
 
 ```powershell
 dotnet test QuanLyKhoHang.Tests/QuanLyKhoHang.Tests.csproj
 ```
 
-Sau khi da build/restore, chay nhanh:
+After building/restoring, run quickly:
 
 ```powershell
 dotnet test QuanLyKhoHang.Tests/QuanLyKhoHang.Tests.csproj --no-build --no-restore
 ```
 
-Exit code `0` va dong `Passed!` nghia la test thanh cong. Khi dat project test lam Startup Project trong Visual Studio, cua so console ket thuc ngay sau khi test xong la hanh vi binh thuong.
+Exit code `0` and the `Passed!` line mean the tests succeeded. If the test project is set as the Startup Project in Visual Studio, the console window closing immediately after the tests complete is normal behavior.
 
-## Quy tac them test
+## Rules for adding tests
 
-- Moi test kiem tra mot hanh vi ro rang va doc lap.
-- Unit test khong ket noi database that.
-- Test can PostgreSQL phai duoc dat trong nhom integration rieng, dung database test tach biet va co cleanup.
-- Test endpoint nhay cam can bao phu ca `401`, `403`, validation va rate limit neu phu hop.
-- Khong dung secret, mat khau that hay du lieu production trong test.
+- Each test verifies one clear, independent behavior.
+- Unit tests must not connect to a real database.
+- Tests that require PostgreSQL must be placed in a separate integration-test group, use an isolated test database, and perform cleanup.
+- Tests for sensitive endpoints should cover `401`, `403`, validation, and rate limiting where applicable.
+- Do not use secrets, real passwords, or production data in tests.
